@@ -63,6 +63,7 @@ const canonical = new URL(Astro.url.pathname, Astro.site).toString();
 
       let lenis: Lenis | null = null;
       let rafId = 0;
+      let lastNavigationType: string | null = null;
 
       function initLenis() {
         if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
@@ -80,10 +81,44 @@ const canonical = new URL(Astro.url.pathname, Astro.site).toString();
         lenis?.scrollTo(0, { immediate: true });
       }
 
+      function scrollKey() {
+        return `portfolio-scroll:${window.location.pathname}${window.location.search}`;
+      }
+
+      function saveScroll() {
+        try {
+          sessionStorage.setItem(scrollKey(), String(window.scrollY));
+        } catch {}
+      }
+
+      function restoreScrollIfPossible() {
+        if (lastNavigationType !== 'traverse') return false;
+        try {
+          const saved = sessionStorage.getItem(scrollKey());
+          if (saved === null) return false;
+          const y = Number.parseInt(saved, 10);
+          if (Number.isNaN(y)) return false;
+          lenis?.scrollTo(y, { immediate: true });
+          window.scrollTo(0, y);
+          return true;
+        } catch {
+          return false;
+        }
+      }
+
       initLenis();
+
+      document.addEventListener('astro:before-preparation', (event) => {
+        const nav = (event as unknown as { navigationType?: string }).navigationType;
+        lastNavigationType = nav ?? null;
+        saveScroll();
+      });
+
       document.addEventListener('astro:after-swap', () => {
         initLenis();
-        scrollToTopImmediate();
+        if (!restoreScrollIfPossible()) {
+          scrollToTopImmediate();
+        }
       });
     </script>
   </body>
