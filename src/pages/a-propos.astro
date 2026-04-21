@@ -1,0 +1,83 @@
+---
+import { Image } from 'astro:assets';
+import sanjaliPhoto from '../assets/profile/sanjali.png';
+import BaseLayout from '../layouts/BaseLayout.astro';
+---
+
+<BaseLayout
+  title="À propos — Sanjali Frédélisy"
+  description="Sanjali Frédélisy, étudiante en BTS Communication. Parcours, valeurs et passions — musique, création visuelle et projets créatifs."
+>
+  <section class="flex min-h-screen items-center justify-center bg-[#f0e7d7] px-6 py-32">
+    <div class="mx-auto max-w-7xl">
+      <h1
+        class="mb-16 text-center font-serif text-5xl text-[#5c2c1f] md:text-6xl"
+      >
+        À propos
+      </h1>
+
+      <div class="grid items-start gap-16 md:h-[600px] md:grid-cols-2">
+        <div class="flex h-full w-full justify-center">
+          <div class="relative h-[500px] w-full max-w-md md:h-full">
+            <div
+              class="absolute inset-0 rounded-3xl bg-gradient-to-br from-[#bd988d]/30 to-[#e3a0a3]/30 blur-2xl"
+            >
+            </div>
+            <div
+              class="relative h-full w-full overflow-hidden rounded-3xl shadow-2xl"
+            >
+              <Image
+                src={sanjaliPhoto}
+                alt="Sanjali Frédélisy"
+                widths={[400, 600, 900]}
+                sizes="(min-width: 768px) 50vw, 100vw"
+                class="h-full w-full object-cover"
+                loading="eager"
+              />
+            </div>
+          </div>
+        </div>
+
+        <div class="custom-scrollbar relative h-full overflow-y-auto pr-4">
+          <div class="space-y-6 pb-6 text-[#5c2c1f]/90">
+            <p class="text-lg leading-relaxed">
+              Je m'appelle <span class="font-semibold text-[#702a0c]"
+                >Sanjali Fredelisy</span
+              > et j'évolue dans le domaine de la communication.
+            </p>
+            <p class="text-lg leading-relaxed">
+              Je suis très intéressée par la création visuelle et les nouveaux
+              projets. J'aime imaginer, créer et suivre des projets, ainsi que
+              concevoir différents supports de communication.
+            </p>
+            <p class="text-lg leading-relaxed">
+              Curieuse et organisée, je prends plaisir à apprendre chaque jour à
+              travers mes missions, mais surtout j'ai envie de continuer à
+              m'améliorer et à évoluer dans mon domaine.
+            </p>
+            <p class="text-lg leading-relaxed">
+              Mon objectif est de développer mes compétences en communication,
+              tout en réussissant à apporter une touche personnelle et créative
+              à mon travail.
+            </p>
+            <p class="text-lg leading-relaxed">
+              Après avoir obtenu un baccalauréat avec la mention assez bien, je
+              suis entrée dans le monde du travail, où j'ai travaillé pendant
+              trois ans. Suite à cette expérience, j'ai décidé de me
+              reconvertir professionnellement vers un domaine qui m'attirait
+              depuis longtemps : la communication, et plus précisément la
+              création de contenu.
+            </p>
+            <p class="text-lg leading-relaxed">
+              Dans la vie, j'ai plusieurs passions que je cultive depuis des
+              années, notamment la musique, je joue du piano, ainsi que le
+              sport. Mon parcours personnel et professionnel m'a appris la
+              rigueur et la régularité, des valeurs que j'essaie aujourd'hui
+              d'appliquer à ma formation et à mon futur métier.
+            </p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+</BaseLayout>

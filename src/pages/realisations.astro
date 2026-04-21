@@ -1,0 +1,92 @@
+---
+import { getCollection } from 'astro:content';
+import ProjectCard from '../components/astro/ProjectCard.astro';
+import BaseLayout from '../layouts/BaseLayout.astro';
+
+const projects = await getCollection('projects');
+const sorted = projects.sort((a, b) => a.data.order - b.data.order);
+---
+
+<BaseLayout
+  title="Réalisations — Sanjali Frédélisy"
+  description="Découvrez mes projets de communication visuelle, création graphique et stratégie — école du numérique et alternance en association."
+>
+  <section
+    class="min-h-screen bg-gradient-to-br from-[#f0e7d7] via-[#f9e0da]/30 to-[#f0e7d7] px-4 py-24 sm:px-6 sm:py-32"
+  >
+    <div class="mx-auto max-w-5xl">
+      <header class="mb-16 text-center sm:mb-24">
+        <h1
+          id="realisations-title"
+          class="mb-6 font-medium font-serif text-5xl text-[#5c2c1f] sm:text-6xl md:text-7xl"
+        >
+          Réalisations
+        </h1>
+      </header>
+
+      <div id="project-list" class="flex flex-col gap-8">
+        {
+          sorted.map((project, index) => (
+            <div
+              class="project-card-wrapper"
+              data-type={project.data.type}
+              data-order={project.data.order}
+            >
+              <ProjectCard
+                href={`/projet/${project.id}`}
+                title={project.data.title}
+                category={project.data.category}
+                description={project.data.description}
+                cover={project.data.cover}
+                index={index}
+                slug={project.id}
+              />
+            </div>
+          ))
+        }
+      </div>
+
+      <div id="empty-state" class="hidden py-32 text-center">
+        <p class="font-serif text-2xl text-[#bd988d]">
+          Aucun projet à afficher pour le moment.
+        </p>
+      </div>
+    </div>
+  </section>
+</BaseLayout>
+
+<script>
+  const FILTER_TITLES: Record<string, string> = {
+    ecole: 'École du numérique',
+    entreprise: "Association Saint-François d'Assise",
+  };
+
+  function applyFilter() {
+    const params = new URLSearchParams(window.location.search);
+    const filter = params.get('filter');
+
+    const title = document.getElementById('realisations-title');
+    if (title) {
+      title.textContent =
+        filter && FILTER_TITLES[filter] ? FILTER_TITLES[filter] : 'Réalisations';
+    }
+
+    const cards = document.querySelectorAll<HTMLElement>('.project-card-wrapper');
+    let visible = 0;
+    cards.forEach((card) => {
+      const type = card.dataset.type;
+      const show = !filter || filter === 'all' || type === filter;
+      card.style.display = show ? '' : 'none';
+      if (show) visible++;
+    });
+
+    const empty = document.getElementById('empty-state');
+    const list = document.getElementById('project-list');
+    if (empty && list) {
+      empty.classList.toggle('hidden', visible > 0);
+      list.classList.toggle('hidden', visible === 0);
+    }
+  }
+
+  document.addEventListener('astro:page-load', applyFilter);
+</script>

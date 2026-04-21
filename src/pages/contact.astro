@@ -1,0 +1,86 @@
+---
+import { Icon } from 'astro-icon/components';
+import BaseLayout from '../layouts/BaseLayout.astro';
+import { CONTACT_INFO } from '../lib/navigation';
+---
+
+<BaseLayout
+  title="Contact — Sanjali Frédélisy"
+  description="Contactez Sanjali Frédélisy par téléphone ou par email pour vos projets de communication."
+>
+  <section
+    class="flex min-h-screen items-center justify-center bg-[#f0e7d7] px-4 py-24 md:px-6 md:py-32"
+  >
+    <div class="mx-auto w-full max-w-4xl">
+      <header class="mb-12 text-center md:mb-16">
+        <h1 class="mb-6 text-4xl text-[#5c2c1f] md:mb-8 md:text-6xl">Contact</h1>
+      </header>
+
+      <div class="mx-auto grid max-w-3xl gap-6 md:grid-cols-2 md:gap-8">
+        <a
+          href={CONTACT_INFO.phoneHref}
+          class="contact-card group flex flex-col items-center gap-4 rounded-3xl border border-[#bd988d]/20 bg-white/60 p-6 text-center shadow-lg backdrop-blur-sm transition-all hover:shadow-2xl md:p-8"
+        >
+          <div
+            class="mb-2 flex h-16 w-16 items-center justify-center rounded-full bg-[#702a0c] transition-transform group-hover:scale-110 md:h-20 md:w-20"
+          >
+            <Icon name="lucide:phone" class="h-6 w-6 text-[#f0e7d7] md:h-8 md:w-8" />
+          </div>
+          <div>
+            <p
+              class="mb-2 font-medium text-[#bd988d] text-sm uppercase tracking-wider"
+            >
+              Téléphone
+            </p>
+            <p class="font-semibold text-[#5c2c1f] text-lg md:text-2xl">
+              {CONTACT_INFO.phone}
+            </p>
+          </div>
+        </a>
+
+        <a
+          href={CONTACT_INFO.emailHref}
+          class="contact-card group flex flex-col items-center gap-4 rounded-3xl border border-[#bd988d]/20 bg-white/60 p-6 text-center shadow-lg backdrop-blur-sm transition-all hover:shadow-2xl md:p-8"
+        >
+          <div
+            class="mb-2 flex h-16 w-16 items-center justify-center rounded-full bg-[#702a0c] transition-transform group-hover:scale-110 md:h-20 md:w-20"
+          >
+            <Icon name="lucide:mail" class="h-6 w-6 text-[#f0e7d7] md:h-8 md:w-8" />
+          </div>
+          <div>
+            <p
+              class="mb-2 font-medium text-[#bd988d] text-sm uppercase tracking-wider"
+            >
+              Email
+            </p>
+            <p
+              class="whitespace-nowrap font-semibold text-[#5c2c1f] text-sm sm:text-lg md:text-2xl"
+            >
+              {CONTACT_INFO.email}
+            </p>
+          </div>
+        </a>
+      </div>
+    </div>
+  </section>
+</BaseLayout>
+
+<style>
+  .contact-card {
+    transition: transform 0.2s ease, box-shadow 0.3s ease;
+  }
+  .contact-card:hover {
+    transform: scale(1.05);
+  }
+  .contact-card:active {
+    transform: scale(0.95);
+  }
+  @media (prefers-reduced-motion: reduce) {
+    .contact-card,
+    .contact-card:hover,
+    .contact-card:active {
+      transform: none;
+      transition: none;
+    }
+  }
+</style>

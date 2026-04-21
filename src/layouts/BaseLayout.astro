@@ -1,0 +1,90 @@
+---
+import { ClientRouter } from 'astro:transitions';
+import Footer from '../components/astro/Footer.astro';
+import Header from '../components/astro/Header.astro';
+import '../styles/global.css';
+
+interface Props {
+  title: string;
+  description?: string;
+  image?: string;
+}
+
+const {
+  title,
+  description = 'Portfolio de Sanjali Frédélisy, étudiante en BTS Communication.',
+  image = '/og-default.png',
+} = Astro.props;
+
+const canonical = new URL(Astro.url.pathname, Astro.site).toString();
+---
+
+<!doctype html>
+<html lang="fr">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+    <meta name="generator" content={Astro.generator} />
+
+    <title>{title}</title>
+    <meta name="description" content={description} />
+    <link rel="canonical" href={canonical} />
+
+    <meta property="og:type" content="website" />
+    <meta property="og:title" content={title} />
+    <meta property="og:description" content={description} />
+    <meta property="og:url" content={canonical} />
+    <meta property="og:image" content={new URL(image, Astro.site).toString()} />
+    <meta property="og:locale" content="fr_FR" />
+
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:title" content={title} />
+    <meta name="twitter:description" content={description} />
+    <meta name="twitter:image" content={new URL(image, Astro.site).toString()} />
+
+    <ClientRouter />
+  </head>
+  <body class="flex min-h-screen flex-col bg-background text-foreground">
+    <a
+      href="#main-content"
+      class="sr-only fixed top-4 left-4 z-[100] rounded-full bg-primary px-4 py-2 font-medium text-primary-foreground shadow-lg focus:not-sr-only"
+    >
+      Aller au contenu principal
+    </a>
+    <Header />
+    <main id="main-content" class="flex-1">
+      <slot />
+    </main>
+    <Footer />
+
+    <script>
+      import Lenis from 'lenis';
+
+      let lenis: Lenis | null = null;
+      let rafId = 0;
+
+      function initLenis() {
+        if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
+        lenis?.destroy();
+        lenis = new Lenis({ lerp: 0.1, smoothWheel: true });
+        const loop = (time: number) => {
+          lenis?.raf(time);
+          rafId = requestAnimationFrame(loop);
+        };
+        cancelAnimationFrame(rafId);
+        rafId = requestAnimationFrame(loop);
+      }
+
+      function scrollToTopImmediate() {
+        lenis?.scrollTo(0, { immediate: true });
+      }
+
+      initLenis();
+      document.addEventListener('astro:after-swap', () => {
+        initLenis();
+        scrollToTopImmediate();
+      });
+    </script>
+  </body>
+</html>

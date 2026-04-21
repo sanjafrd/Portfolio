@@ -1,0 +1,105 @@
+---
+import { Image } from 'astro:assets';
+import type { ImageMetadata } from 'astro';
+
+interface Props {
+  href: string;
+  title: string;
+  category: string;
+  description?: string;
+  cover: ImageMetadata;
+  index: number;
+  slug: string;
+}
+
+const { href, title, category, description, cover, index, slug } = Astro.props;
+const isEven = index % 2 === 0;
+---
+
+<article
+  class:list={[
+    'project-card group mb-12 w-full last:mb-0',
+    isEven ? 'is-even' : 'is-odd',
+  ]}
+>
+  <a
+    href={href}
+    class="flex flex-col items-center gap-8 md:gap-16"
+    class:list={[isEven ? 'md:flex-row' : 'md:flex-row-reverse']}
+    aria-label={`Voir le projet ${title}`}
+  >
+    <div class="relative w-full md:w-1/2">
+      <div class="relative aspect-video overflow-hidden bg-transparent md:aspect-[4/3]">
+        <Image
+          src={cover}
+          alt={title}
+          widths={[480, 800, 1200]}
+          sizes="(min-width: 768px) 50vw, 100vw"
+          class="project-card__image h-full w-full object-contain"
+          loading={index < 2 ? 'eager' : 'lazy'}
+          transition:name={`project-hero-${slug}`}
+        />
+      </div>
+    </div>
+
+    <div
+      class:list={[
+        'flex flex-1 flex-col justify-center',
+        isEven ? 'md:items-start' : 'md:items-end',
+      ]}
+    >
+      <span class="mb-4 w-full text-left font-medium text-rose-moyen text-sm uppercase tracking-widest">
+        {category}
+      </span>
+      <h3 class="mb-6 w-full text-left font-medium font-serif text-3xl text-foreground transition-colors group-hover:text-primary md:text-4xl">
+        {title}
+      </h3>
+      {
+        description && (
+          <p class="mb-8 w-full max-w-lg text-left text-[15px] text-secondary leading-relaxed">
+            {description}
+          </p>
+        )
+      }
+      <div class="w-full text-left">
+        <span class="inline-flex items-center border-primary/30 border-b pb-1 font-medium text-primary text-sm uppercase tracking-widest transition-colors group-hover:border-primary">
+          Voir le projet
+        </span>
+      </div>
+    </div>
+  </a>
+</article>
+
+<style>
+  .project-card {
+    opacity: 0;
+    transform: translateY(40px);
+    animation: cardReveal 0.6s ease-out 0.1s forwards;
+  }
+
+  @keyframes cardReveal {
+    to {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  }
+
+  .project-card__image {
+    transition: transform 0.7s ease;
+  }
+
+  .project-card:hover .project-card__image {
+    transform: scale(1.05);
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .project-card {
+      opacity: 1;
+      transform: none;
+      animation: none;
+    }
+    .project-card__image {
+      transition: none;
+    }
+  }
+</style>

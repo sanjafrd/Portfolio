@@ -1,0 +1,89 @@
+---
+import { TargetTabs } from '../react/TargetTabs';
+
+interface TargetTab {
+  id: string;
+  label: string;
+  content: string;
+}
+
+interface ObjectiveCard {
+  title: string;
+  items: string[];
+}
+
+interface SimpleObjectives {
+  intro?: string;
+  items: string[];
+}
+
+interface Props {
+  layoutId: string;
+  targetTabs?: TargetTab[];
+  objectives?: ObjectiveCard[];
+  simpleObjectives?: SimpleObjectives;
+}
+
+const { layoutId, targetTabs, objectives, simpleObjectives } = Astro.props;
+---
+
+{
+  targetTabs && targetTabs.length > 0 && (
+    <section class="mb-16">
+      <h2 class="mb-8 inline-block border-[#702a0c]/30 border-b-2 pr-12 pb-4 font-serif text-3xl text-[#5c2c1f] md:text-4xl">
+        Publics visés
+      </h2>
+      <TargetTabs client:load layoutId={layoutId} tabs={targetTabs} />
+    </section>
+  )
+}
+
+{
+  objectives && objectives.length > 0 && (
+    <section class="mb-16">
+      <h2 class="mb-8 inline-block border-[#702a0c]/30 border-b-2 pr-12 pb-4 font-serif text-3xl text-[#5c2c1f] md:text-4xl">
+        Objectifs
+      </h2>
+      <div class="grid grid-cols-1 gap-6 md:grid-cols-3">
+        {objectives.map((obj) => (
+          <div class="rounded-2xl border border-[#5c2c1f]/10 bg-white/60 p-6 backdrop-blur-sm transition-colors duration-300 hover:bg-white/80">
+            <h3 class="mb-4 text-center font-serif text-[#5c2c1f] text-lg">
+              {obj.title}
+            </h3>
+            <ul class="space-y-3">
+              {obj.items.map((item) => (
+                <li class="flex items-start gap-2 text-[#5c2c1f]/80 text-sm leading-relaxed">
+                  <span class="mt-1.5 h-1.5 w-1.5 shrink-0 rounded-full bg-[#702a0c]/70" />
+                  {item}
+                </li>
+              ))}
+            </ul>
+          </div>
+        ))}
+      </div>
+    </section>
+  )
+}
+
+{
+  simpleObjectives && (
+    <section class="mb-16">
+      <h2 class="mb-8 inline-block border-[#702a0c]/30 border-b-2 pr-12 pb-4 font-serif text-3xl text-[#5c2c1f] md:text-4xl">
+        Objectifs
+      </h2>
+      {simpleObjectives.intro && (
+        <p class="mb-6 text-[17px] text-[#5c2c1f]/85 leading-relaxed">
+          {simpleObjectives.intro}
+        </p>
+      )}
+      <ul class="space-y-3">
+        {simpleObjectives.items.map((item) => (
+          <li class="flex items-start gap-3 text-[17px] text-[#5c2c1f]/85 leading-relaxed">
+            <span class="mt-2.5 h-1.5 w-1.5 shrink-0 rounded-full bg-[#702a0c]/50" />
+            <span>{item}</span>
+          </li>
+        ))}
+      </ul>
+    </section>
+  )
+}

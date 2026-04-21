@@ -1,0 +1,132 @@
+---
+import { type CollectionEntry, getCollection } from 'astro:content';
+import FormattedText from '../../components/astro/FormattedText.astro';
+import Gallery from '../../components/astro/Gallery.astro';
+import Hero from '../../components/astro/Hero.astro';
+import ProjectSections from '../../components/astro/ProjectSections.astro';
+import ProjectLayout from '../../layouts/ProjectLayout.astro';
+
+export async function getStaticPaths() {
+  const projects = await getCollection('projects');
+  return projects.map((project) => ({
+    params: { slug: project.id },
+    props: { project },
+  }));
+}
+
+interface Props {
+  project: CollectionEntry<'projects'>;
+}
+
+const { project } = Astro.props;
+const { data } = project;
+
+const sections: { title: string; content: string | undefined }[] = [
+  { title: 'Contexte', content: data.details?.context },
+];
+
+const afterSections: { title: string; content: string | undefined }[] = [
+  { title: 'Veille', content: data.details?.watch },
+  { title: 'Stratégie', content: data.details?.strategy },
+  { title: 'Création', content: data.details?.creation },
+  { title: 'Diffusion', content: data.details?.diffusion },
+  { title: 'Analyse', content: data.details?.analysis },
+];
+
+const hasStructuredSections =
+  (data.targetTabs && data.targetTabs.length > 0) ||
+  (data.objectives && data.objectives.length > 0) ||
+  !!data.simpleObjectives;
+
+const fallbackTarget = !hasStructuredSections
+  ? { title: 'Publics visés', content: data.details?.target }
+  : null;
+---
+
+<ProjectLayout
+  title={data.title}
+  subtitle={data.subtitle}
+  category={data.category}
+  description={data.description}
+  cover={data.cover}
+  wide={!!data.detailRightImage}
+>
+  <Hero
+    title={data.title}
+    slug={project.id}
+    cover={data.cover}
+    carouselImages={data.carouselImages}
+    videoUrl={data.videoUrl}
+    videoUrls={data.videoUrls}
+    detailImages={data.detailImages}
+    detailImagesTop={data.detailImagesTop}
+    detailImagesBottom={data.detailImagesBottom}
+    detailRightImage={data.detailRightImage}
+    banner={data.banner}
+    specialLayout={data.specialLayout}
+  />
+
+  <div class="mx-auto max-w-4xl">
+    {
+      sections.map(
+        ({ title, content }) =>
+          content && (
+            <section class="mb-16">
+              <h2 class="mb-8 inline-block border-[#702a0c]/30 border-b-2 pr-12 pb-4 font-serif font-bold text-3xl text-[#5c2c1f] md:text-4xl">
+                {title}
+              </h2>
+              <FormattedText content={content} />
+            </section>
+          ),
+      )
+    }
+
+    {
+      fallbackTarget?.content && (
+        <section class="mb-16">
+          <h2 class="mb-8 inline-block border-[#702a0c]/30 border-b-2 pr-12 pb-4 font-serif font-bold text-3xl text-[#5c2c1f] md:text-4xl">
+            {fallbackTarget.title}
+          </h2>
+          <FormattedText content={fallbackTarget.content} />
+        </section>
+      )
+    }
+
+    <ProjectSections
+      layoutId={project.id}
+      targetTabs={data.targetTabs}
+      objectives={data.objectives}
+      simpleObjectives={data.simpleObjectives}
+    />
+
+    {
+      afterSections.map(
+        ({ title, content }) =>
+          content && (
+            <section class="mb-16">
+              <h2 class="mb-8 inline-block border-[#702a0c]/30 border-b-2 pr-12 pb-4 font-serif font-bold text-3xl text-[#5c2c1f] md:text-4xl">
+                {title}
+              </h2>
+              <FormattedText content={content} />
+            </section>
+          ),
+      )
+    }
+  </div>
+
+  {
+    data.gallery && (
+      <Gallery
+        title={data.title}
+        config={data.gallery}
+        carouselImages={data.carouselImages}
+        detailImages={data.detailImages}
+        detailImagesTop={data.detailImagesTop}
+        detailImagesBottom={data.detailImagesBottom}
+        videoUrl={data.videoUrl}
+        videoUrls={data.videoUrls}
+        specialLayout={data.specialLayout}
+      />
+    )
+  }
+</ProjectLayout>

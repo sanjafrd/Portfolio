@@ -1,0 +1,12 @@
+---
+import { Header as HeaderIsland } from '../react/Header';
+
+const currentPath = Astro.url.pathname;
+---
+
+<div transition:persist>
+  <HeaderIsland client:load initialPath={currentPath} />
+</div>
+
+<!-- Spacer for fixed header height on every page -->
+<div class="h-[72px]" aria-hidden="true"></div>

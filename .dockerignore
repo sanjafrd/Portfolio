@@ -1,0 +1,13 @@
+node_modules
+dist
+.git
+.github
+.vscode
+.claude
+.astro
+.cache
+.DS_Store
+*.log
+.env
+.env.*
+!.env.example

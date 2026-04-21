@@ -1,0 +1,176 @@
+@import 'tailwindcss';
+
+@import '@fontsource/poppins/300.css';
+@import '@fontsource/poppins/400.css';
+@import '@fontsource/poppins/500.css';
+@import '@fontsource/poppins/600.css';
+@import '@fontsource/poppins/700.css';
+@import '@fontsource/playfair-display/400.css';
+@import '@fontsource/playfair-display/500.css';
+@import '@fontsource/playfair-display/600.css';
+
+:root {
+  --font-size: 16px;
+  --font-sans: 'Poppins', ui-sans-serif, system-ui, sans-serif;
+  --font-serif: 'Playfair Display', ui-serif, Georgia, serif;
+
+  /* Warm beige background + dark brown text */
+  --background: #f0e7d7;
+  --foreground: #5c2c1f;
+
+  /* Cards: soft pink-beige */
+  --card: #f9e0da;
+  --card-foreground: #5c2c1f;
+
+  --popover: #f9e0da;
+  --popover-foreground: #5c2c1f;
+
+  /* Primary: deep warm brown-red */
+  --primary: #702a0c;
+  --primary-foreground: #f0e7d7;
+
+  /* Secondary: medium brown */
+  --secondary: #8c5b45;
+  --secondary-foreground: #ffffff;
+
+  --muted: #e8dcc8;
+  --muted-foreground: #8c5b45;
+
+  --accent: #e3a0a3;
+  --accent-foreground: #5c2c1f;
+
+  --destructive: #c0392b;
+  --destructive-foreground: #ffffff;
+
+  /* Footer bg */
+  --rose-moyen: #bd988d;
+
+  /* Border: translucent brown */
+  --border: rgba(92, 44, 31, 0.15);
+  --input: rgba(92, 44, 31, 0.15);
+  --input-background: rgba(92, 44, 31, 0.05);
+  --ring: rgba(112, 42, 12, 0.4);
+
+  --font-weight-normal: 400;
+  --font-weight-medium: 500;
+
+  --radius: 1rem;
+}
+
+@theme inline {
+  --color-background: var(--background);
+  --color-foreground: var(--foreground);
+  --color-card: var(--card);
+  --color-card-foreground: var(--card-foreground);
+  --color-popover: var(--popover);
+  --color-popover-foreground: var(--popover-foreground);
+  --color-primary: var(--primary);
+  --color-primary-foreground: var(--primary-foreground);
+  --color-secondary: var(--secondary);
+  --color-secondary-foreground: var(--secondary-foreground);
+  --color-muted: var(--muted);
+  --color-muted-foreground: var(--muted-foreground);
+  --color-accent: var(--accent);
+  --color-accent-foreground: var(--accent-foreground);
+  --color-destructive: var(--destructive);
+  --color-destructive-foreground: var(--destructive-foreground);
+  --color-border: var(--border);
+  --color-input: var(--input);
+  --color-input-background: var(--input-background);
+  --color-ring: var(--ring);
+  --color-rose-moyen: var(--rose-moyen);
+
+  --font-sans: var(--font-sans);
+  --font-serif: var(--font-serif);
+
+  --radius-sm: calc(var(--radius) - 4px);
+  --radius-md: calc(var(--radius) - 2px);
+  --radius-lg: var(--radius);
+  --radius-xl: calc(var(--radius) + 4px);
+}
+
+@layer base {
+  html {
+    font-size: var(--font-size);
+    scroll-behavior: smooth;
+    scrollbar-width: thin;
+    scrollbar-color: rgba(92, 44, 31, 0.35) rgba(92, 44, 31, 0.05);
+  }
+
+  html::-webkit-scrollbar {
+    width: 10px;
+  }
+  html::-webkit-scrollbar-track {
+    background: rgba(92, 44, 31, 0.05);
+  }
+  html::-webkit-scrollbar-thumb {
+    background: rgba(92, 44, 31, 0.35);
+    border-radius: 999px;
+    border: 2px solid var(--background);
+  }
+  html::-webkit-scrollbar-thumb:hover {
+    background: rgba(92, 44, 31, 0.55);
+  }
+
+  html.lenis,
+  html.lenis body {
+    height: auto;
+  }
+
+  .lenis.lenis-smooth {
+    scroll-behavior: auto !important;
+  }
+
+  .lenis.lenis-smooth [data-lenis-prevent] {
+    overscroll-behavior: contain;
+  }
+
+  .lenis.lenis-stopped {
+    overflow: hidden;
+  }
+
+  body {
+    background-color: var(--background);
+    color: var(--foreground);
+    font-family: var(--font-sans);
+    line-height: 1.5;
+    min-height: 100vh;
+  }
+
+  h1,
+  h2,
+  h3,
+  h4,
+  p,
+  label,
+  button,
+  input {
+    line-height: 1.5;
+  }
+
+  *:focus-visible {
+    outline: 2px solid var(--ring);
+    outline-offset: 2px;
+  }
+}
+
+@layer utilities {
+  .custom-scrollbar::-webkit-scrollbar {
+    width: 6px;
+  }
+  .custom-scrollbar::-webkit-scrollbar-track {
+    background: rgba(92, 44, 31, 0.05);
+    border-radius: 4px;
+  }
+  .custom-scrollbar::-webkit-scrollbar-thumb {
+    background: rgba(92, 44, 31, 0.2);
+    border-radius: 4px;
+  }
+  .custom-scrollbar::-webkit-scrollbar-thumb:hover {
+    background: rgba(92, 44, 31, 0.35);
+  }
+  .custom-scrollbar {
+    scrollbar-width: thin;
+    scrollbar-color: rgba(92, 44, 31, 0.2) rgba(92, 44, 31, 0.05);
+  }
+}

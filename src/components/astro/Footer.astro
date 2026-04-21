@@ -1,0 +1,79 @@
+---
+import { Icon } from 'astro-icon/components';
+import { SOCIAL_LINKS } from '../../lib/navigation';
+
+const year = new Date().getFullYear();
+---
+
+<footer class="border-t border-secondary/20 bg-rose-moyen px-6 py-12">
+  <div class="mx-auto max-w-6xl text-center">
+    <h3 class="footer-fade mb-6 font-medium text-2xl text-background" style="--delay: 0ms">
+      Sanjali Frédélisy
+    </h3>
+
+    <div class="footer-fade mb-8 flex justify-center gap-4" style="--delay: 200ms">
+      {
+        SOCIAL_LINKS.map((link) => (
+          <a
+            href={link.href}
+            target="_blank"
+            rel="noopener noreferrer"
+            class="social-link flex h-12 w-12 items-center justify-center rounded-full bg-background text-primary shadow-md transition-all hover:bg-white"
+            aria-label={link.label}
+          >
+            <Icon name={link.icon} class="h-5 w-5" />
+          </a>
+        ))
+      }
+    </div>
+
+    <p class="footer-fade mb-6 text-background/80 text-lg italic" style="--delay: 400ms">
+      Pensé avec passion, conçu avec le cœur
+    </p>
+
+    <div class="footer-fade text-foreground/60 text-sm" style="--delay: 500ms">
+      © {year} Sanjali Frédélisy. Tous droits réservés.
+    </div>
+  </div>
+</footer>
+
+<style>
+  @keyframes footerFadeIn {
+    from {
+      opacity: 0;
+      transform: translateY(20px);
+    }
+    to {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  }
+
+  .footer-fade {
+    opacity: 0;
+    animation: footerFadeIn 0.6s ease-out var(--delay, 0ms) forwards;
+  }
+
+  .social-link {
+    transition:
+      transform 0.2s ease,
+      background-color 0.2s ease;
+  }
+  .social-link:hover {
+    transform: translateY(-5px) scale(1.15);
+  }
+  .social-link:active {
+    transform: scale(0.95);
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .footer-fade {
+      animation: none;
+      opacity: 1;
+      transform: none;
+    }
+    .social-link {
+      transition: none;
+    }
+  }
+</style>
