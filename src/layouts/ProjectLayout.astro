@@ -1,6 +1,7 @@
 ---
 import { getImage } from 'astro:assets';
 import type { ImageMetadata } from 'astro';
+import { ProjectImageLightbox } from '../components/react/ProjectImageLightbox';
 import BaseLayout from './BaseLayout.astro';
 
 interface Props {
@@ -104,4 +105,5 @@ const ogImage = cover
       </footer>
     </div>
   </section>
+  <ProjectImageLightbox client:idle />
 </BaseLayout>

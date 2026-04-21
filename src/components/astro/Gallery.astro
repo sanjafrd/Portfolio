@@ -46,8 +46,8 @@ const gridCols = config.gridCols ?? 'grid-cols-2 md:grid-cols-3';
 const itemClasses = `overflow-hidden rounded-2xl ring-1 ring-[#5c2c1f]/10 shadow-lg ${config.itemBg ?? ''}`;
 const imgClasses =
   config.imageAspect === 'auto'
-    ? 'h-auto w-full object-contain'
-    : 'aspect-square h-full w-full object-cover';
+    ? 'h-auto w-full cursor-zoom-in object-contain'
+    : 'aspect-square h-full w-full cursor-zoom-in object-cover';
 
 const hasVideos = config.showVideo || config.showVideoUrls;
 
@@ -95,6 +95,7 @@ const kakemonoBottomSrcs =
                 sizes="(min-width: 768px) 33vw, 50vw"
                 class={imgClasses}
                 loading="lazy"
+                data-zoomable
               />
             </div>
           ))}

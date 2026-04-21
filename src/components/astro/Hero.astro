@@ -73,9 +73,10 @@ const detailBottomSrcs = detailImagesBottom ? await optimizeMany(detailImagesBot
           alt={title}
           widths={[800, 1200, 1800]}
           sizes="(min-width: 768px) 80vw, 100vw"
-          class={`h-full w-full ${banner.objectPosition}`}
+          class={`h-full w-full cursor-zoom-in ${banner.objectPosition}`}
           loading="eager"
           transition:name={heroTransitionName}
+          data-zoomable
         />
       ) : (
         <Image
@@ -83,9 +84,10 @@ const detailBottomSrcs = detailImagesBottom ? await optimizeMany(detailImagesBot
           alt={title}
           widths={[800, 1200, 1800]}
           sizes="(min-width: 768px) 80vw, 100vw"
-          class={`h-full w-full ${banner.objectPosition}`}
+          class={`h-full w-full cursor-zoom-in ${banner.objectPosition}`}
           loading="eager"
           transition:name={heroTransitionName}
+          data-zoomable
         />
       )}
     </div>
@@ -171,7 +173,8 @@ const detailBottomSrcs = detailImagesBottom ? await optimizeMany(detailImagesBot
               alt={`${title} — Détail`}
               widths={[600, 900, 1200]}
               sizes="(min-width: 768px) 45vw, 100vw"
-              class="w-full rounded-2xl object-cover"
+              class="w-full cursor-zoom-in rounded-2xl object-cover"
+              data-zoomable
             />
           </div>
         ) : null
@@ -188,8 +191,9 @@ const detailBottomSrcs = detailImagesBottom ? await optimizeMany(detailImagesBot
         alt={title}
         widths={[800, 1200, 1600]}
         sizes="(min-width: 768px) 80vw, 100vw"
-        class="max-h-[80vh] max-w-full rounded-3xl object-contain shadow-2xl ring-1 ring-[#5c2c1f]/10"
+        class="max-h-[80vh] max-w-full cursor-zoom-in rounded-3xl object-contain shadow-2xl ring-1 ring-[#5c2c1f]/10"
         transition:name={heroTransitionName}
+        data-zoomable
       />
     </div>
   )
@@ -229,9 +233,10 @@ const detailBottomSrcs = detailImagesBottom ? await optimizeMany(detailImagesBot
             alt={title}
             widths={[800, 1200, 1800]}
             sizes="(min-width: 768px) 80vw, 100vw"
-            class="h-full w-full object-cover"
+            class="h-full w-full cursor-zoom-in object-cover"
             loading="eager"
             transition:name={heroTransitionName}
+            data-zoomable
           />
         </div>
       </div>
