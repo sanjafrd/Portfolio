@@ -1,6 +1,7 @@
 ---
-import { Image } from 'astro:assets';
+import { getImage, Image } from 'astro:assets';
 import type { ImageMetadata } from 'astro';
+import { ProjectCardCarousel } from '../react/ProjectCardCarousel';
 
 interface Props {
   href: string;
@@ -8,12 +9,23 @@ interface Props {
   category: string;
   description?: string;
   cover: ImageMetadata;
+  carouselImages?: ImageMetadata[];
   index: number;
   slug: string;
 }
 
-const { href, title, category, description, cover, index, slug } = Astro.props;
+const { href, title, category, description, cover, carouselImages, index, slug } = Astro.props;
 const isEven = index % 2 === 0;
+
+const hasCarousel = !!carouselImages && carouselImages.length > 1;
+const carouselSrcs = carouselImages
+  ? await Promise.all(
+      carouselImages.map(async (img) => {
+        const optimized = await getImage({ src: img, width: 900, format: 'webp' });
+        return optimized.src;
+      }),
+    )
+  : [];
 ---
 
 <article
@@ -29,17 +41,23 @@ const isEven = index % 2 === 0;
     aria-label={`Voir le projet ${title}`}
   >
     <div class="relative w-full md:w-1/2">
-      <div class="relative aspect-video overflow-hidden bg-transparent md:aspect-[4/3]">
-        <Image
-          src={cover}
-          alt={title}
-          widths={[480, 800, 1200]}
-          sizes="(min-width: 768px) 50vw, 100vw"
-          class="project-card__image h-full w-full object-contain"
-          loading={index < 2 ? 'eager' : 'lazy'}
-          transition:name={`project-hero-${slug}`}
-        />
-      </div>
+      {
+        hasCarousel ? (
+          <ProjectCardCarousel client:visible images={carouselSrcs} alt={title} />
+        ) : (
+          <div class="relative aspect-video overflow-hidden bg-transparent md:aspect-[4/3]">
+            <Image
+              src={cover}
+              alt={title}
+              widths={[480, 800, 1200]}
+              sizes="(min-width: 768px) 50vw, 100vw"
+              class="project-card__image h-full w-full object-contain"
+              loading={index < 2 ? 'eager' : 'lazy'}
+              transition:name={`project-hero-${slug}`}
+            />
+          </div>
+        )
+      }
     </div>
 
     <div
