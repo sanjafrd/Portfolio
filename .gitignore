@@ -24,3 +24,7 @@ yarn-error.log*
 .idea/
 *.swp
 *.swo
+
+# Raw video sources (only compressed versions go in public/videos/)
+/*.MOV
+/*.mov
