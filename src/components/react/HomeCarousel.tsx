@@ -40,23 +40,7 @@ export function HomeCarousel() {
   const prevSlide = () => setCurrentSlide((prev) => (prev - 1 + slides.length) % slides.length);
 
   return (
-    <section className="relative flex min-h-screen items-center justify-center overflow-hidden bg-gradient-to-br from-[#f0e7d7] via-[#f9e0da] to-[#bd988d]">
-      <div className="pointer-events-none absolute inset-0 z-0 overflow-hidden opacity-30">
-        <video
-          className="absolute inset-0 h-full w-full object-cover"
-          src="/videos/fond-accueil.mp4"
-          poster="/videos/fond-accueil-poster.jpg"
-          autoPlay
-          muted
-          loop
-          playsInline
-          preload="metadata"
-          aria-hidden="true"
-        />
-      </div>
-
-      <div className="absolute inset-0 z-[1] bg-gradient-to-b from-transparent via-[#f0e7d7]/30 to-transparent" />
-
+    <section className="relative flex min-h-screen items-center justify-center overflow-hidden bg-gradient-to-br from-[#f0e7d7] via-[#f9e0da]/30 to-[#f0e7d7]">
       <div className="relative z-10 mx-auto max-w-5xl px-6 text-center">
         <AnimatePresence mode="wait">
           <motion.div
