@@ -76,11 +76,13 @@ const projects = defineCollection({
           items: z.array(z.string()),
         })
         .optional(),
-      externalLink: z
-        .object({
-          label: z.string(),
-          url: z.string(),
-        })
+      externalLinks: z
+        .array(
+          z.object({
+            label: z.string(),
+            url: z.string(),
+          }),
+        )
         .optional(),
     }),
 });
