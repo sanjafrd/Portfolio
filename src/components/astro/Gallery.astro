@@ -20,6 +20,7 @@ interface Props {
   detailImages?: ImageMetadata[];
   detailImagesTop?: ImageMetadata[];
   detailImagesBottom?: ImageMetadata[];
+  galleryImages?: ImageMetadata[];
   videoUrl?: string;
   videoUrls?: string[];
   specialLayout?: 'benetton' | 'storyboard' | 'kakemono' | 'cem';
@@ -32,6 +33,7 @@ const {
   detailImages,
   detailImagesTop,
   detailImagesBottom,
+  galleryImages,
   videoUrl,
   videoUrls,
   specialLayout,
@@ -39,7 +41,12 @@ const {
 
 const isKakemono = specialLayout === 'kakemono';
 
-const rawImages = config.source === 'carousel' ? carouselImages : detailImages;
+const rawImages =
+  galleryImages && galleryImages.length > 0
+    ? galleryImages
+    : config.source === 'carousel'
+      ? carouselImages
+      : detailImages;
 const images = rawImages ? (config.skipFirst ? rawImages.slice(1) : rawImages) : [];
 
 const gridCols = config.gridCols ?? 'grid-cols-2 md:grid-cols-3';

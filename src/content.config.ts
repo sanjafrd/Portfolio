@@ -23,6 +23,7 @@ const projects = defineCollection({
       detailImagesTop: z.array(image()).optional(),
       detailImagesBottom: z.array(image()).optional(),
       detailRightImage: image().optional(),
+      galleryImages: z.array(image()).optional(),
 
       banner: z
         .object({
