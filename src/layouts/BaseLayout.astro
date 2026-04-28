@@ -112,6 +112,12 @@ const canonical = new URL(Astro.url.pathname, Astro.site).toString();
         const nav = (event as unknown as { navigationType?: string }).navigationType;
         lastNavigationType = nav ?? null;
         saveScroll();
+        try {
+          sessionStorage.setItem(
+            'portfolio-previous-path',
+            `${window.location.pathname}${window.location.search}`,
+          );
+        } catch {}
       });
 
       document.addEventListener('astro:after-swap', () => {
