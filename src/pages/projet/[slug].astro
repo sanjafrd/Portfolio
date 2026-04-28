@@ -129,4 +129,35 @@ const fallbackTarget = !hasStructuredSections
       />
     )
   }
+
+  {
+    data.externalLink && (
+      <div class="mx-auto mt-20 flex max-w-5xl justify-center">
+        <a
+          href={data.externalLink.url}
+          target="_blank"
+          rel="noopener noreferrer"
+          class="group inline-flex items-center gap-3 rounded-full border-2 border-[#702a0c] bg-transparent px-10 py-4 font-medium text-[#702a0c] transition-all duration-300 hover:scale-105 hover:bg-[#702a0c] hover:text-[#f0e7d7] hover:shadow-[#702a0c]/20 hover:shadow-xl"
+        >
+          {data.externalLink.label}
+          <svg
+            xmlns="http://www.w3.org/2000/svg"
+            width="18"
+            height="18"
+            viewBox="0 0 24 24"
+            fill="none"
+            stroke="currentColor"
+            stroke-width="2"
+            stroke-linecap="round"
+            stroke-linejoin="round"
+            aria-hidden="true"
+            class="transition-transform group-hover:translate-x-1"
+          >
+            <path d="M7 17L17 7" />
+            <path d="M7 7h10v10" />
+          </svg>
+        </a>
+      </div>
+    )
+  }
 </ProjectLayout>
