@@ -11,6 +11,7 @@ interface GalleryConfig {
   itemBg?: string;
   showVideo?: boolean;
   showVideoUrls?: boolean;
+  maxWidth?: string;
 }
 
 interface Props {
@@ -50,6 +51,7 @@ const rawImages =
 const images = rawImages ? (config.skipFirst ? rawImages.slice(1) : rawImages) : [];
 
 const gridCols = config.gridCols ?? 'grid-cols-2 md:grid-cols-3';
+const sectionMaxWidth = config.maxWidth ?? 'max-w-5xl';
 const itemClasses = `overflow-hidden rounded-2xl ring-1 ring-[#5c2c1f]/10 shadow-lg ${config.itemBg ?? ''}`;
 const imgClasses =
   config.imageAspect === 'auto'
@@ -73,7 +75,7 @@ const kakemonoBottomSrcs =
   isKakemono && detailImagesBottom ? await optimizeMany(detailImagesBottom, 1200) : [];
 ---
 
-<section class="mx-auto mt-24 max-w-5xl">
+<section class:list={['mx-auto mt-24', sectionMaxWidth]}>
   <h2
     class="mb-12 inline-block border-[#702a0c]/30 border-b-2 pr-12 pb-4 font-serif text-3xl text-[#5c2c1f] md:text-4xl"
   >
