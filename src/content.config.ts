@@ -40,6 +40,7 @@ const projects = defineCollection({
           showVideo: z.boolean().optional(),
           showVideoUrls: z.boolean().optional(),
           maxWidth: z.string().optional(),
+          splitInTwo: z.boolean().optional(),
         })
         .optional(),
       specialLayout: z.enum(['benetton', 'storyboard', 'kakemono', 'cem']).optional(),

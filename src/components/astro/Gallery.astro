@@ -12,6 +12,7 @@ interface GalleryConfig {
   showVideo?: boolean;
   showVideoUrls?: boolean;
   maxWidth?: string;
+  splitInTwo?: boolean;
 }
 
 interface Props {
@@ -52,6 +53,10 @@ const images = rawImages ? (config.skipFirst ? rawImages.slice(1) : rawImages) :
 
 const gridCols = config.gridCols ?? 'grid-cols-2 md:grid-cols-3';
 const sectionMaxWidth = config.maxWidth ?? 'max-w-5xl';
+const splitInTwo = config.splitInTwo === true;
+const splitIndex = splitInTwo ? Math.ceil(images.length / 2) : 0;
+const firstHalf = splitInTwo ? images.slice(0, splitIndex) : [];
+const secondHalf = splitInTwo ? images.slice(splitIndex) : [];
 const itemClasses = `overflow-hidden rounded-2xl ring-1 ring-[#5c2c1f]/10 shadow-lg ${config.itemBg ?? ''}`;
 const imgClasses =
   config.imageAspect === 'auto'
@@ -94,21 +99,56 @@ const kakemonoBottomSrcs =
       </div>
     ) : images.length > 0 ? (
       <div class="w-full">
-        <div class:list={['grid gap-4', gridCols, hasVideos ? 'mb-8' : '']}>
-          {images.map((image, index) => (
-            <div class={itemClasses}>
-              <Image
-                src={image}
-                alt={`${title} — Image ${index + 1}`}
-                widths={[400, 600, 900]}
-                sizes="(min-width: 768px) 33vw, 50vw"
-                class={imgClasses}
-                loading="lazy"
-                data-zoomable
-              />
+        {splitInTwo ? (
+          <div class:list={['flex flex-col gap-8 md:flex-row md:gap-12 lg:gap-16', hasVideos ? 'mb-8' : '']}>
+            <div class="grid w-full grid-cols-2 gap-4 md:flex-1">
+              {firstHalf.map((image, index) => (
+                <div class={itemClasses}>
+                  <Image
+                    src={image}
+                    alt={`${title} — Image ${index + 1}`}
+                    widths={[300, 500, 700]}
+                    sizes="(min-width: 768px) 22vw, 45vw"
+                    class={imgClasses}
+                    loading="lazy"
+                    data-zoomable
+                  />
+                </div>
+              ))}
             </div>
-          ))}
-        </div>
+            <div class="grid w-full grid-cols-2 gap-4 md:flex-1">
+              {secondHalf.map((image, index) => (
+                <div class={itemClasses}>
+                  <Image
+                    src={image}
+                    alt={`${title} — Image ${splitIndex + index + 1}`}
+                    widths={[300, 500, 700]}
+                    sizes="(min-width: 768px) 22vw, 45vw"
+                    class={imgClasses}
+                    loading="lazy"
+                    data-zoomable
+                  />
+                </div>
+              ))}
+            </div>
+          </div>
+        ) : (
+          <div class:list={['grid gap-4', gridCols, hasVideos ? 'mb-8' : '']}>
+            {images.map((image, index) => (
+              <div class={itemClasses}>
+                <Image
+                  src={image}
+                  alt={`${title} — Image ${index + 1}`}
+                  widths={[400, 600, 900]}
+                  sizes="(min-width: 768px) 33vw, 50vw"
+                  class={imgClasses}
+                  loading="lazy"
+                  data-zoomable
+                />
+              </div>
+            ))}
+          </div>
+        )}
 
         {config.showVideo && videoUrl && (
           <div class="w-full overflow-hidden rounded-2xl shadow-lg ring-1 ring-[#5c2c1f]/10">
