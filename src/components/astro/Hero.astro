@@ -68,10 +68,10 @@ const detailBottomSrcs = detailImagesBottom ? await optimizeMany(detailImagesBot
   isBanner && banner && (bannerImage || isKakemono) && (
     <div
       class:list={[
-        'mb-24 aspect-video w-full overflow-hidden md:aspect-[21/9]',
+        'mb-24 aspect-video overflow-hidden md:aspect-[21/9]',
         banner.fullBleed
-          ? ''
-          : 'rounded-3xl shadow-2xl ring-1 ring-[#5c2c1f]/10',
+          ? 'relative left-1/2 right-1/2 -mx-[50vw] w-screen'
+          : 'w-full rounded-3xl shadow-2xl ring-1 ring-[#5c2c1f]/10',
       ]}
     >
       {isKakemono ? (
