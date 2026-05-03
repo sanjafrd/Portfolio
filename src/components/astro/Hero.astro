@@ -15,7 +15,7 @@ interface Props {
   detailImagesTop?: ImageMetadata[];
   detailImagesBottom?: ImageMetadata[];
   detailRightImage?: ImageMetadata;
-  banner?: { objectPosition: string };
+  banner?: { objectPosition: string; fullBleed?: boolean };
   specialLayout?: 'benetton' | 'storyboard' | 'kakemono' | 'cem';
 }
 
@@ -66,7 +66,14 @@ const detailBottomSrcs = detailImagesBottom ? await optimizeMany(detailImagesBot
 
 {
   isBanner && banner && (bannerImage || isKakemono) && (
-    <div class="mb-24 aspect-video w-full overflow-hidden rounded-3xl shadow-2xl ring-1 ring-[#5c2c1f]/10 md:aspect-[21/9]">
+    <div
+      class:list={[
+        'mb-24 aspect-video w-full overflow-hidden md:aspect-[21/9]',
+        banner.fullBleed
+          ? ''
+          : 'rounded-3xl shadow-2xl ring-1 ring-[#5c2c1f]/10',
+      ]}
+    >
       {isKakemono ? (
         <Image
           src={cover}

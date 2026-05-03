@@ -28,6 +28,7 @@ const projects = defineCollection({
       banner: z
         .object({
           objectPosition: z.string(),
+          fullBleed: z.boolean().optional(),
         })
         .optional(),
       gallery: z
