@@ -42,6 +42,29 @@ const qualities = [
       "Je touche à de nombreux domaines de la communication : événementiel, réseaux sociaux, graphisme, rédaction, communication interne, print, digital et gestion de projet.",
   },
 ];
+
+const passions = [
+  {
+    title: 'Sport',
+    description:
+      "Le sport fait partie de mon quotidien. Il m'aide à me dépasser, à rester disciplinée et à maintenir un bon équilibre de vie.",
+  },
+  {
+    title: 'Bien-être',
+    description:
+      "J'accorde une grande importance à l'équilibre entre le corps et l'esprit, à travers des habitudes qui favorisent le bien-être au quotidien.",
+  },
+  {
+    title: 'Lecture',
+    description:
+      "J'aime lire pour découvrir de nouvelles histoires, apprendre et m'évader.",
+  },
+  {
+    title: 'Piano',
+    description:
+      "Le piano me permet d'exprimer ma créativité, de me détendre et de développer ma sensibilité artistique.",
+  },
+];
 ---
 
 <BaseLayout
@@ -233,6 +256,39 @@ const qualities = [
                     </span>
                     <p class="text-sm leading-snug text-[#f0e7d7]/90">
                       {quality.description}
+                    </p>
+                  </div>
+                </div>
+              </div>
+            ))
+          }
+        </div>
+      </div>
+
+      <div class="mt-24">
+        <h2
+          data-reveal
+          class="mb-12 text-center font-serif text-3xl text-[#5c2c1f] md:text-4xl"
+        >
+          Mes passions
+        </h2>
+        <div class="mx-auto grid max-w-5xl grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-4">
+          {
+            passions.map((passion, index) => (
+              <div data-reveal style={`--reveal-delay: ${index * 90}ms`}>
+                <div
+                  tabindex="0"
+                  class="group relative flex aspect-square cursor-default items-center justify-center overflow-hidden rounded-3xl bg-gradient-to-br from-[#bd988d]/25 to-[#e3a0a3]/25 p-6 text-center shadow-lg ring-1 ring-[#5c2c1f]/10 transition-shadow duration-300 hover:shadow-2xl focus:outline-none focus-visible:ring-2 focus-visible:ring-[#702a0c]"
+                >
+                  <span class="px-2 font-serif text-2xl text-[#702a0c] transition-all duration-300 group-hover:-translate-y-1 group-hover:opacity-0 group-focus:-translate-y-1 group-focus:opacity-0">
+                    {passion.title}
+                  </span>
+                  <div class="absolute inset-0 flex flex-col items-center justify-center gap-3 bg-[#5c2c1f] p-6 opacity-0 transition-opacity duration-300 group-hover:opacity-100 group-focus:opacity-100">
+                    <span class="font-serif text-xl text-[#e3a0a3]">
+                      {passion.title}
+                    </span>
+                    <p class="text-sm leading-snug text-[#f0e7d7]/90">
+                      {passion.description}
                     </p>
                   </div>
                 </div>
