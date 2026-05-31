@@ -1,29 +1,10 @@
 ---
-import type { CollectionEntry } from 'astro:content';
 import { getCollection } from 'astro:content';
 import ProjectCard from '../components/astro/ProjectCard.astro';
 import BaseLayout from '../layouts/BaseLayout.astro';
 
 const projects = await getCollection('projects');
 const sorted = projects.sort((a, b) => a.data.order - b.data.order);
-
-// Images qui défilent sur la vignette de présentation : on privilégie les
-// photos de la galerie, puis le carrousel, puis les images de détail.
-function cardImages(data: CollectionEntry<'projects'>['data']) {
-  const detailTopBottom = [
-    ...(data.detailImagesTop ?? []),
-    ...(data.detailImagesBottom ?? []),
-  ];
-  for (const list of [
-    data.galleryImages,
-    data.carouselImages,
-    data.detailImages,
-    detailTopBottom,
-  ]) {
-    if (list && list.length > 1) return list;
-  }
-  return data.carouselImages;
-}
 ---
 
 <BaseLayout
@@ -57,7 +38,7 @@ function cardImages(data: CollectionEntry<'projects'>['data']) {
                 category={project.data.category}
                 description={project.data.description}
                 cover={project.data.cover}
-                carouselImages={cardImages(project.data)}
+                carouselImages={project.data.carouselImages}
                 index={index}
                 slug={project.id}
               />
