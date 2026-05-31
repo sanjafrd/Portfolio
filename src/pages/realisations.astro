@@ -18,7 +18,7 @@ const CARD_EXTRA_IMAGES: Record<string, (data: ProjectData) => ImageMetadata[]> 
   'taxe-apprentissage': (d) => d.galleryImages ?? [],
   vaccination: (d) => d.galleryImages ?? [],
   oralite: (d) => d.galleryImages ?? [],
-  cem: (d) => (d.galleryImages ?? []).slice(0, 6),
+  cem: (d) => d.galleryImages ?? [],
   kakemono: (d) => [...(d.detailImagesTop ?? []), ...(d.detailImagesBottom ?? [])],
 };
 
