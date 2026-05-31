@@ -10,7 +10,16 @@ const sorted = projects.sort((a, b) => a.data.order - b.data.order);
 // Images qui défilent sur la vignette de présentation : on privilégie les
 // photos de la galerie, puis le carrousel, puis les images de détail.
 function cardImages(data: CollectionEntry<'projects'>['data']) {
-  for (const list of [data.galleryImages, data.carouselImages, data.detailImages]) {
+  const detailTopBottom = [
+    ...(data.detailImagesTop ?? []),
+    ...(data.detailImagesBottom ?? []),
+  ];
+  for (const list of [
+    data.galleryImages,
+    data.carouselImages,
+    data.detailImages,
+    detailTopBottom,
+  ]) {
     if (list && list.length > 1) return list;
   }
   return data.carouselImages;
