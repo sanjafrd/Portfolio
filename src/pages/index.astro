@@ -1,6 +1,24 @@
 ---
 import { HomeCarousel } from '../components/react/HomeCarousel';
 import BaseLayout from '../layouts/BaseLayout.astro';
+
+const approach = [
+  {
+    title: 'Création visuelle',
+    description:
+      'Concevoir des supports clairs, attractifs et cohérents, aussi bien pour le print que pour le digital.',
+  },
+  {
+    title: 'Gestion de projet',
+    description:
+      "Organiser, coordonner et suivre chaque étape d'un projet afin de transformer une idée en réalisation concrète.",
+  },
+  {
+    title: 'Communication & stratégie',
+    description:
+      'Réfléchir aux bons messages, comprendre les besoins et proposer des actions adaptées aux objectifs fixés.',
+  },
+];
 ---
 
 <BaseLayout
@@ -8,4 +26,41 @@ import BaseLayout from '../layouts/BaseLayout.astro';
   description="Portfolio de Sanjali Frédélisy, étudiante en BTS Communication. Projets scolaires et professionnels en communication visuelle, design et stratégie."
 >
   <HomeCarousel client:load />
+
+  <section id="mon-approche" class="scroll-mt-24 bg-[#f0e7d7] px-6 py-24 md:py-32">
+    <div class="mx-auto grid max-w-6xl items-center gap-12 md:grid-cols-2 md:gap-16">
+      <div>
+        <p class="mb-6 font-medium text-[#702a0c]/70 text-xs uppercase tracking-[0.3em]">
+          Mon approche
+        </p>
+        <p class="font-serif text-2xl text-[#5c2c1f] leading-relaxed md:text-3xl">
+          J'aime donner vie aux idées à travers des projets de communication à la
+          fois créatifs et utiles. De la réflexion à la réalisation, je prends
+          plaisir à imaginer des solutions adaptées, à créer des supports visuels
+          impactants et à accompagner chaque projet avec rigueur et enthousiasme.
+        </p>
+      </div>
+
+      <div class="flex flex-col gap-5">
+        {
+          approach.map((card) => (
+            <div
+              tabindex="0"
+              class="group relative flex min-h-[7.5rem] cursor-default items-center justify-center overflow-hidden rounded-2xl bg-gradient-to-br from-[#bd988d]/25 to-[#e3a0a3]/25 p-6 text-center shadow-lg ring-1 ring-[#5c2c1f]/10 transition-shadow duration-300 hover:shadow-2xl focus:outline-none focus-visible:ring-2 focus-visible:ring-[#702a0c]"
+            >
+              <span class="font-serif text-xl text-[#702a0c] transition-all duration-300 group-hover:opacity-0 group-focus:opacity-0">
+                {card.title}
+              </span>
+              <div class="absolute inset-0 flex flex-col items-center justify-center gap-2 bg-[#5c2c1f] p-5 opacity-0 transition-opacity duration-300 group-hover:opacity-100 group-focus:opacity-100">
+                <span class="font-serif text-lg text-[#e3a0a3]">{card.title}</span>
+                <p class="text-sm text-[#f0e7d7]/90 leading-snug">
+                  {card.description}
+                </p>
+              </div>
+            </div>
+          ))
+        }
+      </div>
+    </div>
+  </section>
 </BaseLayout>
