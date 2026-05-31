@@ -1,10 +1,22 @@
 ---
+import type { CollectionEntry } from 'astro:content';
 import { getCollection } from 'astro:content';
 import ProjectCard from '../components/astro/ProjectCard.astro';
 import BaseLayout from '../layouts/BaseLayout.astro';
 
 const projects = await getCollection('projects');
 const sorted = projects.sort((a, b) => a.data.order - b.data.order);
+
+// Vignette du projet « Hygiène des mains » : on garde la photo de présentation,
+// puis on enchaîne avec l'affiche. Les autres projets et les pages de détail
+// ne changent pas.
+function cardCarousel(project: CollectionEntry<'projects'>) {
+  if (project.id === 'hygiene') {
+    const affiche = project.data.galleryImages?.[0];
+    if (affiche) return [project.data.cover, affiche];
+  }
+  return project.data.carouselImages;
+}
 ---
 
 <BaseLayout
@@ -38,7 +50,7 @@ const sorted = projects.sort((a, b) => a.data.order - b.data.order);
                 category={project.data.category}
                 description={project.data.description}
                 cover={project.data.cover}
-                carouselImages={project.data.carouselImages}
+                carouselImages={cardCarousel(project)}
                 index={index}
                 slug={project.id}
               />
