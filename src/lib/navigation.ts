@@ -33,11 +33,6 @@ export const SOCIAL_LINKS = [
     href: 'https://www.linkedin.com/',
     icon: 'lucide:linkedin',
   },
-  {
-    label: 'Instagram',
-    href: 'https://www.instagram.com/',
-    icon: 'lucide:instagram',
-  },
 ] as const;
 
 export function getFilterTitle(filter: FilterType): string {
