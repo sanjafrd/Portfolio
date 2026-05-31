@@ -19,6 +19,12 @@ const approach = [
       'Réfléchir aux bons messages, comprendre les besoins et proposer des actions adaptées aux objectifs fixés.',
   },
 ];
+
+const mainProjects = [
+  { name: 'LGM', label: 'Projet scolaire', href: '/projet/lgm' },
+  { name: '20 ans du CEM', label: 'Projet entreprise', href: '/projet/cem' },
+  { name: 'Brochure établissement', label: 'Projet entreprise', href: '/projet/brochure' },
+];
 ---
 
 <BaseLayout
@@ -58,6 +64,33 @@ const approach = [
                 </p>
               </div>
             </div>
+          ))
+        }
+      </div>
+    </div>
+  </section>
+
+  <section id="projets-principaux" class="scroll-mt-24 bg-[#f0e7d7] px-6 pb-24 md:pb-32">
+    <div class="mx-auto max-w-6xl">
+      <p class="mb-10 text-center font-medium text-[#702a0c]/70 text-xs uppercase tracking-[0.3em]">
+        Projets principaux
+      </p>
+
+      <div class="grid grid-cols-1 gap-6 sm:grid-cols-3 md:gap-8">
+        {
+          mainProjects.map((project) => (
+            <a
+              href={project.href}
+              class="group flex min-h-[9rem] flex-col items-center justify-center gap-3 rounded-2xl bg-[#f9e0da] p-8 text-center shadow-lg ring-1 ring-[#5c2c1f]/10 transition-all duration-300 hover:-translate-y-1 hover:shadow-2xl focus:outline-none focus-visible:ring-2 focus-visible:ring-[#702a0c]"
+              aria-label={`Voir le projet ${project.name}`}
+            >
+              <span class="font-serif text-2xl text-[#5c2c1f] transition-colors group-hover:text-[#702a0c] md:text-3xl">
+                {project.name}
+              </span>
+              <span class="text-[#8c5b45] text-xs uppercase tracking-[0.2em]">
+                {project.label}
+              </span>
+            </a>
           ))
         }
       </div>
