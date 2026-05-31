@@ -64,6 +64,9 @@ const imgClasses =
     : 'aspect-square h-full w-full cursor-zoom-in object-cover';
 
 const hasVideos = config.showVideo || config.showVideoUrls;
+const hasVideoContent =
+  (config.showVideo && !!videoUrl) ||
+  (config.showVideoUrls && !!videoUrls && videoUrls.length > 0);
 
 async function optimizeMany(metas: ImageMetadata[], width: number): Promise<string[]> {
   return Promise.all(
@@ -97,18 +100,51 @@ const kakemonoBottomSrcs =
           <ImageSwitcher client:load images={kakemonoBottomSrcs} alt={`${title} — Groupe 2`} />
         </div>
       </div>
-    ) : images.length > 0 ? (
+    ) : images.length > 0 || hasVideoContent ? (
       <div class="w-full">
-        {splitInTwo ? (
-          <div class:list={['flex flex-col gap-8 md:flex-row md:gap-12 lg:gap-16', hasVideos ? 'mb-8' : '']}>
-            <div class="grid w-full grid-cols-2 gap-4 md:flex-1">
-              {firstHalf.map((image, index) => (
+        {images.length > 0 &&
+          (splitInTwo ? (
+            <div class:list={['flex flex-col gap-8 md:flex-row md:gap-12 lg:gap-16', hasVideos ? 'mb-8' : '']}>
+              <div class="grid w-full grid-cols-2 gap-4 md:flex-1">
+                {firstHalf.map((image, index) => (
+                  <div class={itemClasses}>
+                    <Image
+                      src={image}
+                      alt={`${title} — Image ${index + 1}`}
+                      widths={[300, 500, 700]}
+                      sizes="(min-width: 768px) 22vw, 45vw"
+                      class={imgClasses}
+                      loading="lazy"
+                      data-zoomable
+                    />
+                  </div>
+                ))}
+              </div>
+              <div class="grid w-full grid-cols-2 gap-4 md:flex-1">
+                {secondHalf.map((image, index) => (
+                  <div class={itemClasses}>
+                    <Image
+                      src={image}
+                      alt={`${title} — Image ${splitIndex + index + 1}`}
+                      widths={[300, 500, 700]}
+                      sizes="(min-width: 768px) 22vw, 45vw"
+                      class={imgClasses}
+                      loading="lazy"
+                      data-zoomable
+                    />
+                  </div>
+                ))}
+              </div>
+            </div>
+          ) : (
+            <div class:list={['grid gap-4', gridCols, hasVideos ? 'mb-8' : '']}>
+              {images.map((image, index) => (
                 <div class={itemClasses}>
                   <Image
                     src={image}
                     alt={`${title} — Image ${index + 1}`}
-                    widths={[300, 500, 700]}
-                    sizes="(min-width: 768px) 22vw, 45vw"
+                    widths={[400, 600, 900]}
+                    sizes="(min-width: 768px) 33vw, 50vw"
                     class={imgClasses}
                     loading="lazy"
                     data-zoomable
@@ -116,39 +152,7 @@ const kakemonoBottomSrcs =
                 </div>
               ))}
             </div>
-            <div class="grid w-full grid-cols-2 gap-4 md:flex-1">
-              {secondHalf.map((image, index) => (
-                <div class={itemClasses}>
-                  <Image
-                    src={image}
-                    alt={`${title} — Image ${splitIndex + index + 1}`}
-                    widths={[300, 500, 700]}
-                    sizes="(min-width: 768px) 22vw, 45vw"
-                    class={imgClasses}
-                    loading="lazy"
-                    data-zoomable
-                  />
-                </div>
-              ))}
-            </div>
-          </div>
-        ) : (
-          <div class:list={['grid gap-4', gridCols, hasVideos ? 'mb-8' : '']}>
-            {images.map((image, index) => (
-              <div class={itemClasses}>
-                <Image
-                  src={image}
-                  alt={`${title} — Image ${index + 1}`}
-                  widths={[400, 600, 900]}
-                  sizes="(min-width: 768px) 33vw, 50vw"
-                  class={imgClasses}
-                  loading="lazy"
-                  data-zoomable
-                />
-              </div>
-            ))}
-          </div>
-        )}
+          ))}
 
         {config.showVideo && videoUrl && (
           <div class="w-full overflow-hidden rounded-2xl shadow-lg ring-1 ring-[#5c2c1f]/10">
