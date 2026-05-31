@@ -5,20 +5,33 @@ import { SOCIAL_LINKS } from '../../lib/navigation';
 const year = new Date().getFullYear();
 ---
 
-<footer class="border-t border-secondary/20 bg-[#5e201c] px-6 py-12">
-  <div class="mx-auto max-w-6xl text-center">
-    <h3 class="footer-fade mb-6 font-medium text-2xl text-background" style="--delay: 0ms">
-      Sanjali Frédélisy
-    </h3>
+<footer
+  class="px-6 py-20 md:py-24"
+  style="background: radial-gradient(ellipse 120% 100% at 50% 30%, #38160b 0%, #2b1108 100%);"
+>
+  <div class="mx-auto max-w-5xl text-center">
+    <p
+      class="footer-fade mb-6 font-medium text-[#bd988d] text-xs uppercase tracking-[0.3em] md:text-sm"
+      style="--delay: 0ms"
+    >
+      Sanjali Frédélisy — Communication
+    </p>
 
-    <div class="footer-fade mb-8 flex justify-center gap-4" style="--delay: 200ms">
+    <h2
+      class="footer-fade mb-10 font-serif text-4xl text-[#f0e7d7] leading-tight sm:text-5xl md:text-6xl"
+      style="--delay: 150ms"
+    >
+      Créons quelque chose ensemble.
+    </h2>
+
+    <div class="footer-fade mb-12 flex justify-center gap-4" style="--delay: 300ms">
       {
         SOCIAL_LINKS.map((link) => (
           <a
             href={link.href}
             target="_blank"
             rel="noopener noreferrer"
-            class="social-link flex h-12 w-12 items-center justify-center rounded-full bg-background text-primary shadow-md transition-all hover:bg-white"
+            class="social-link flex h-12 w-12 items-center justify-center rounded-full bg-[#f0e7d7]/10 text-[#f0e7d7] transition-all hover:bg-[#f0e7d7]/20"
             aria-label={link.label}
           >
             <Icon name={link.icon} class="h-5 w-5" />
@@ -27,11 +40,7 @@ const year = new Date().getFullYear();
       }
     </div>
 
-    <p class="footer-fade mb-6 text-background/80 text-lg italic" style="--delay: 400ms">
-      Pensé avec passion, conçu avec le cœur
-    </p>
-
-    <div class="footer-fade text-background/60 text-sm" style="--delay: 500ms">
+    <div class="footer-fade text-[#f0e7d7]/50 text-sm" style="--delay: 450ms">
       © {year} Sanjali Frédélisy. Tous droits réservés.
     </div>
   </div>
