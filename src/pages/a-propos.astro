@@ -51,12 +51,13 @@ const qualities = [
   <section class="flex min-h-screen items-center justify-center bg-[#f0e7d7] px-6 py-32">
     <div class="mx-auto max-w-7xl">
       <h1
+        data-reveal
         class="mb-16 text-center font-serif text-5xl text-[#5c2c1f] md:text-6xl"
       >
         À propos
       </h1>
 
-      <div class="grid items-start gap-16 md:h-[600px] md:grid-cols-2">
+      <div data-reveal class="grid items-start gap-16 md:h-[600px] md:grid-cols-2">
         <div class="flex h-full w-full justify-center">
           <div class="relative h-[500px] w-full max-w-md md:h-full">
             <div
@@ -115,12 +116,15 @@ const qualities = [
       </div>
 
       <div class="mt-24">
-        <h2 class="mb-16 text-center font-serif text-3xl text-[#5c2c1f] md:text-4xl">
+        <h2
+          data-reveal
+          class="mb-16 text-center font-serif text-3xl text-[#5c2c1f] md:text-4xl"
+        >
           Mon parcours
         </h2>
 
         {/* Frise horizontale — ordinateur */}
-        <div class="relative mx-auto hidden max-w-5xl md:block">
+        <div data-reveal class="relative mx-auto hidden max-w-5xl md:block">
           <div
             class="absolute top-2.5 right-[10%] left-[10%] h-0.5 -translate-y-1/2 bg-gradient-to-r from-[#bd988d] via-[#702a0c] to-[#e3a0a3]"
           >
@@ -143,7 +147,7 @@ const qualities = [
         </div>
 
         {/* Frise verticale — mobile */}
-        <ol class="mx-auto max-w-md space-y-6 md:hidden">
+        <ol data-reveal class="mx-auto max-w-md space-y-6 md:hidden">
           {
             parcours.map((step, index) => (
               <li class="flex gap-4">
@@ -168,26 +172,31 @@ const qualities = [
       </div>
 
       <div class="mt-24">
-        <h2 class="mb-12 text-center font-serif text-3xl text-[#5c2c1f] md:text-4xl">
+        <h2
+          data-reveal
+          class="mb-12 text-center font-serif text-3xl text-[#5c2c1f] md:text-4xl"
+        >
           Mes qualités
         </h2>
         <div class="mx-auto grid max-w-4xl grid-cols-1 gap-6 sm:grid-cols-3">
           {
-            qualities.map((quality) => (
-              <div
-                tabindex="0"
-                class="group relative flex aspect-square cursor-default items-center justify-center overflow-hidden rounded-3xl bg-gradient-to-br from-[#bd988d]/25 to-[#e3a0a3]/25 p-6 text-center shadow-lg ring-1 ring-[#5c2c1f]/10 transition-shadow duration-300 hover:shadow-2xl focus:outline-none focus-visible:ring-2 focus-visible:ring-[#702a0c]"
-              >
-                <span class="px-2 font-serif text-2xl text-[#702a0c] transition-all duration-300 group-hover:-translate-y-1 group-hover:opacity-0 group-focus:-translate-y-1 group-focus:opacity-0">
-                  {quality.title}
-                </span>
-                <div class="absolute inset-0 flex flex-col items-center justify-center gap-3 bg-[#5c2c1f] p-6 opacity-0 transition-opacity duration-300 group-hover:opacity-100 group-focus:opacity-100">
-                  <span class="font-serif text-xl text-[#e3a0a3]">
+            qualities.map((quality, index) => (
+              <div data-reveal style={`--reveal-delay: ${index * 90}ms`}>
+                <div
+                  tabindex="0"
+                  class="group relative flex aspect-square cursor-default items-center justify-center overflow-hidden rounded-3xl bg-gradient-to-br from-[#bd988d]/25 to-[#e3a0a3]/25 p-6 text-center shadow-lg ring-1 ring-[#5c2c1f]/10 transition-shadow duration-300 hover:shadow-2xl focus:outline-none focus-visible:ring-2 focus-visible:ring-[#702a0c]"
+                >
+                  <span class="px-2 font-serif text-2xl text-[#702a0c] transition-all duration-300 group-hover:-translate-y-1 group-hover:opacity-0 group-focus:-translate-y-1 group-focus:opacity-0">
                     {quality.title}
                   </span>
-                  <p class="text-sm leading-snug text-[#f0e7d7]/90">
-                    {quality.description}
-                  </p>
+                  <div class="absolute inset-0 flex flex-col items-center justify-center gap-3 bg-[#5c2c1f] p-6 opacity-0 transition-opacity duration-300 group-hover:opacity-100 group-focus:opacity-100">
+                    <span class="font-serif text-xl text-[#e3a0a3]">
+                      {quality.title}
+                    </span>
+                    <p class="text-sm leading-snug text-[#f0e7d7]/90">
+                      {quality.description}
+                    </p>
+                  </div>
                 </div>
               </div>
             ))
@@ -236,4 +245,57 @@ const qualities = [
     document.addEventListener('astro:after-swap', setupAboutScroll);
     document.addEventListener('astro:before-preparation', teardownAboutScroll);
   </script>
+
+  <script>
+    function setupReveal() {
+      const els = Array.from(
+        document.querySelectorAll<HTMLElement>('[data-reveal]'),
+      );
+      if (!els.length) return;
+      if (
+        !('IntersectionObserver' in window) ||
+        window.matchMedia('(prefers-reduced-motion: reduce)').matches
+      ) {
+        els.forEach((el) => el.classList.add('is-visible'));
+        return;
+      }
+      const observer = new IntersectionObserver(
+        (entries) => {
+          entries.forEach((entry) => {
+            if (entry.isIntersecting) {
+              entry.target.classList.add('is-visible');
+              observer.unobserve(entry.target);
+            }
+          });
+        },
+        { threshold: 0.12, rootMargin: '0px 0px -8% 0px' },
+      );
+      els.forEach((el) => observer.observe(el));
+    }
+
+    setupReveal();
+    document.addEventListener('astro:page-load', setupReveal);
+  </script>
+
+  <style is:global>
+    [data-reveal] {
+      opacity: 0;
+      transform: translateY(28px);
+      transition:
+        opacity 0.7s ease-out,
+        transform 0.7s ease-out;
+      transition-delay: var(--reveal-delay, 0ms);
+    }
+    [data-reveal].is-visible {
+      opacity: 1;
+      transform: none;
+    }
+    @media (prefers-reduced-motion: reduce) {
+      [data-reveal] {
+        opacity: 1;
+        transform: none;
+        transition: none;
+      }
+    }
+  </style>
 </BaseLayout>
