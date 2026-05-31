@@ -2,6 +2,46 @@
 import { Image } from 'astro:assets';
 import sanjaliPhoto from '../assets/profile/sanjali.png';
 import BaseLayout from '../layouts/BaseLayout.astro';
+
+const parcours = [
+  { label: 'Bac général', detail: '2021' },
+  { label: 'Licence 1 Psychologie', detail: '2022' },
+  { label: 'Restauration & événementiel', detail: 'Juin 2022 – Juillet 2024' },
+  {
+    label: 'BTS Communication en alternance',
+    detail: 'Septembre 2024 – Juin 2026',
+  },
+  {
+    label: 'Bachelor en communication',
+    detail: 'Admission',
+    upcoming: true,
+  },
+];
+
+const dotClass = (upcoming?: boolean) =>
+  `h-5 w-5 shrink-0 rounded-full ring-4 ring-[#f0e7d7] ${
+    upcoming
+      ? 'border-2 border-[#702a0c] bg-[#f0e7d7] animate-pulse'
+      : 'bg-[#702a0c]'
+  }`;
+
+const qualities = [
+  {
+    title: 'Créative',
+    description:
+      "J'aime imaginer des concepts, créer des univers visuels, concevoir des supports de communication et trouver des idées originales pour valoriser un projet ou un événement.",
+  },
+  {
+    title: 'Organisée',
+    description:
+      "Je gère plusieurs projets en même temps, je coordonne des événements, je travaille avec différents interlocuteurs et je respecte les délais, ce qui demande une bonne organisation.",
+  },
+  {
+    title: 'Polyvalente',
+    description:
+      "Je touche à de nombreux domaines de la communication : événementiel, réseaux sociaux, graphisme, rédaction, communication interne, print, digital et gestion de projet.",
+  },
+];
 ---
 
 <BaseLayout
@@ -79,6 +119,87 @@ import BaseLayout from '../layouts/BaseLayout.astro';
               d'appliquer à ma formation et à mon futur métier.
             </p>
           </div>
+        </div>
+      </div>
+
+      <div class="mt-24">
+        <h2 class="mb-16 text-center font-serif text-3xl text-[#5c2c1f] md:text-4xl">
+          Mon parcours
+        </h2>
+
+        {/* Frise horizontale — ordinateur */}
+        <div class="relative mx-auto hidden max-w-5xl md:block">
+          <div
+            class="absolute top-2.5 right-[10%] left-[10%] h-0.5 -translate-y-1/2 bg-gradient-to-r from-[#bd988d] via-[#702a0c] to-[#e3a0a3]"
+          >
+          </div>
+          <ol class="grid grid-cols-5">
+            {
+              parcours.map((step) => (
+                <li class="flex flex-col items-center px-3 text-center">
+                  <span class={`relative z-10 ${dotClass(step.upcoming)}`} />
+                  <p class="mt-6 font-serif text-lg leading-snug text-[#5c2c1f]">
+                    {step.label}
+                  </p>
+                  {step.detail && (
+                    <p class="mt-1.5 text-sm text-[#702a0c]/70">{step.detail}</p>
+                  )}
+                </li>
+              ))
+            }
+          </ol>
+        </div>
+
+        {/* Frise verticale — mobile */}
+        <ol class="mx-auto max-w-md space-y-6 md:hidden">
+          {
+            parcours.map((step, index) => (
+              <li class="flex gap-4">
+                <div class="flex flex-col items-center">
+                  <span class={dotClass(step.upcoming)} />
+                  {index < parcours.length - 1 && (
+                    <span class="mt-1 w-0.5 flex-1 bg-[#702a0c]/25" />
+                  )}
+                </div>
+                <div class="pb-1">
+                  <p class="font-serif text-lg leading-snug text-[#5c2c1f]">
+                    {step.label}
+                  </p>
+                  {step.detail && (
+                    <p class="mt-1 text-sm text-[#702a0c]/70">{step.detail}</p>
+                  )}
+                </div>
+              </li>
+            ))
+          }
+        </ol>
+      </div>
+
+      <div class="mt-24">
+        <h2 class="mb-12 text-center font-serif text-3xl text-[#5c2c1f] md:text-4xl">
+          Mes qualités
+        </h2>
+        <div class="mx-auto grid max-w-4xl grid-cols-1 gap-6 sm:grid-cols-3">
+          {
+            qualities.map((quality) => (
+              <div
+                tabindex="0"
+                class="group relative flex aspect-square cursor-default items-center justify-center overflow-hidden rounded-3xl bg-gradient-to-br from-[#bd988d]/25 to-[#e3a0a3]/25 p-6 text-center shadow-lg ring-1 ring-[#5c2c1f]/10 transition-shadow duration-300 hover:shadow-2xl focus:outline-none focus-visible:ring-2 focus-visible:ring-[#702a0c]"
+              >
+                <span class="px-2 font-serif text-2xl text-[#702a0c] transition-all duration-300 group-hover:-translate-y-1 group-hover:opacity-0 group-focus:-translate-y-1 group-focus:opacity-0">
+                  {quality.title}
+                </span>
+                <div class="absolute inset-0 flex flex-col items-center justify-center gap-3 bg-[#5c2c1f] p-6 opacity-0 transition-opacity duration-300 group-hover:opacity-100 group-focus:opacity-100">
+                  <span class="font-serif text-xl text-[#e3a0a3]">
+                    {quality.title}
+                  </span>
+                  <p class="text-sm leading-snug text-[#f0e7d7]/90">
+                    {quality.description}
+                  </p>
+                </div>
+              </div>
+            ))
+          }
         </div>
       </div>
     </div>
