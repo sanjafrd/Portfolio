@@ -1,4 +1,5 @@
 ---
+import type { ImageMetadata } from 'astro';
 import type { CollectionEntry } from 'astro:content';
 import { getCollection } from 'astro:content';
 import ProjectCard from '../components/astro/ProjectCard.astro';
@@ -7,19 +8,25 @@ import BaseLayout from '../layouts/BaseLayout.astro';
 const projects = await getCollection('projects');
 const sorted = projects.sort((a, b) => a.data.order - b.data.order);
 
+type ProjectData = CollectionEntry<'projects'>['data'];
+
 // Vignettes qui gardent la photo de présentation puis enchaînent avec les
-// premières images de la galerie (le chiffre = nombre d'images de galerie à
-// ajouter). Les autres projets et les pages de détail ne changent pas.
-const CARD_GALLERY_EXTRA: Record<string, number> = {
-  hygiene: 1,
-  'taxe-apprentissage': 2,
+// visuels du projet (affiches, brochures, kakémonos…). Chaque projet indique
+// les images à ajouter. Les pages de détail des projets ne changent pas.
+const CARD_EXTRA_IMAGES: Record<string, (data: ProjectData) => ImageMetadata[]> = {
+  hygiene: (d) => (d.galleryImages ?? []).slice(0, 1),
+  'taxe-apprentissage': (d) => d.galleryImages ?? [],
+  vaccination: (d) => d.galleryImages ?? [],
+  oralite: (d) => d.galleryImages ?? [],
+  cem: (d) => (d.galleryImages ?? []).slice(0, 6),
+  kakemono: (d) => [...(d.detailImagesTop ?? []), ...(d.detailImagesBottom ?? [])],
 };
 
 function cardCarousel(project: CollectionEntry<'projects'>) {
-  const extra = CARD_GALLERY_EXTRA[project.id];
-  const gallery = project.data.galleryImages;
-  if (extra && gallery && gallery.length > 0) {
-    return [project.data.cover, ...gallery.slice(0, extra)];
+  const build = CARD_EXTRA_IMAGES[project.id];
+  if (build) {
+    const extra = build(project.data);
+    if (extra.length > 0) return [project.data.cover, ...extra];
   }
   return project.data.carouselImages;
 }
