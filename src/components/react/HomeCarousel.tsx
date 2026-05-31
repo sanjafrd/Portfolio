@@ -1,4 +1,3 @@
-import { ChevronLeft, ChevronRight } from 'lucide-react';
 import { AnimatePresence, motion } from 'motion/react';
 import { useEffect, useState } from 'react';
 
@@ -36,11 +35,47 @@ export function HomeCarousel() {
     return () => clearInterval(timer);
   }, []);
 
-  const nextSlide = () => setCurrentSlide((prev) => (prev + 1) % slides.length);
-  const prevSlide = () => setCurrentSlide((prev) => (prev - 1 + slides.length) % slides.length);
-
   return (
     <section className="relative flex min-h-screen items-center justify-center overflow-hidden bg-gradient-to-br from-[#f0e7d7] via-[#f9e0da]/30 to-[#f0e7d7]">
+      {/* Motif décoratif : nœuds-rubans fins, discrets et alignés */}
+      <svg
+        className="pointer-events-none absolute inset-0 z-0 h-full w-full"
+        aria-hidden="true"
+      >
+        <defs>
+          <g id="ribbon-bow">
+            {/* boucle + pan de gauche */}
+            <path d="M-2,-3 C-16,-15 -30,-7 -27,2 C-25,10 -12,8 -2,3 Z" />
+            <path d="M-1,4 C-5,15 -10,25 -15,35 L-10,34 C-6,25 -2,15 2,5 Z" />
+            {/* boucle + pan de droite (miroir) */}
+            <g transform="scale(-1,1)">
+              <path d="M-2,-3 C-16,-15 -30,-7 -27,2 C-25,10 -12,8 -2,3 Z" />
+              <path d="M-1,4 C-5,15 -10,25 -15,35 L-10,34 C-6,25 -2,15 2,5 Z" />
+            </g>
+            {/* nœud central */}
+            <ellipse cx="0" cy="0" rx="3.4" ry="4.4" />
+          </g>
+          <pattern
+            id="bow-pattern"
+            width="150"
+            height="140"
+            patternUnits="userSpaceOnUse"
+          >
+            <use
+              href="#ribbon-bow"
+              transform="translate(75,58) scale(0.8)"
+              fill="none"
+              stroke="#5c2c1f"
+              strokeWidth="1.3"
+              strokeOpacity="0.09"
+              strokeLinejoin="round"
+              strokeLinecap="round"
+            />
+          </pattern>
+        </defs>
+        <rect width="100%" height="100%" fill="url(#bow-pattern)" />
+      </svg>
+
       <div className="relative z-10 mx-auto max-w-5xl px-6 text-center">
         <AnimatePresence mode="wait">
           <motion.div
@@ -68,37 +103,20 @@ export function HomeCarousel() {
         </AnimatePresence>
       </div>
 
-      <button
-        type="button"
-        onClick={prevSlide}
-        className="-translate-y-1/2 absolute top-1/2 left-6 z-20 flex h-12 w-12 items-center justify-center rounded-full bg-white/90 text-[#702a0c] shadow-md backdrop-blur-sm transition-all hover:bg-white"
-        aria-label="Diapositive précédente"
+      <a
+        href="#mon-approche"
+        className="-translate-x-1/2 absolute bottom-8 left-1/2 z-20 flex flex-col items-center gap-3 text-[#702a0c] transition-opacity hover:opacity-70"
+        aria-label="Explorer la suite de la page"
       >
-        <ChevronLeft className="h-6 w-6" />
-      </button>
-      <button
-        type="button"
-        onClick={nextSlide}
-        className="-translate-y-1/2 absolute top-1/2 right-6 z-20 flex h-12 w-12 items-center justify-center rounded-full bg-white/90 text-[#702a0c] shadow-md backdrop-blur-sm transition-all hover:bg-white"
-        aria-label="Diapositive suivante"
-      >
-        <ChevronRight className="h-6 w-6" />
-      </button>
-
-      <div className="-translate-x-1/2 absolute bottom-12 left-1/2 z-20 flex gap-3">
-        {slides.map((slide, index) => (
-          <button
-            type="button"
-            key={slide.id}
-            onClick={() => setCurrentSlide(index)}
-            className={`h-2 rounded-full shadow-sm transition-all ${
-              index === currentSlide ? 'w-8 bg-[#702a0c]' : 'w-2 bg-[#702a0c]/40'
-            }`}
-            aria-label={`Aller à la diapositive ${index + 1}`}
-            aria-current={index === currentSlide ? 'true' : 'false'}
+        <span className="text-xs uppercase tracking-[0.3em]">Explorer</span>
+        <span className="relative block h-12 w-px overflow-hidden bg-[#5c2c1f]/20">
+          <motion.span
+            className="absolute top-0 left-0 block h-4 w-px bg-[#5c2c1f]"
+            animate={{ y: [-16, 48] }}
+            transition={{ duration: 1.8, repeat: Number.POSITIVE_INFINITY, ease: 'easeInOut' }}
           />
-        ))}
-      </div>
+        </span>
+      </a>
     </section>
   );
 }
