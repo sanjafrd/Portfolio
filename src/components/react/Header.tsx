@@ -101,7 +101,8 @@ export function Header({ initialPath }: HeaderProps) {
           initial="hidden"
           animate="visible"
           exit="exit"
-          className="fixed inset-0 z-[100] flex flex-col bg-[#1a110b]"
+          className="fixed inset-0 z-[100] flex flex-col"
+          style={{ backgroundColor: '#1a110b' }}
           role="dialog"
           aria-modal="true"
           aria-label="Menu de navigation"
