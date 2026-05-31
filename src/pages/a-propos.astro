@@ -275,19 +275,23 @@ const passions = [
         <div class="mx-auto grid max-w-5xl grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-4">
           {
             passions.map((passion, index) => (
-              <div data-reveal style={`--reveal-delay: ${index * 90}ms`}>
+              <div
+                data-reveal
+                style={`--reveal-delay: ${index * 90}ms`}
+                class="flex justify-center"
+              >
                 <div
                   tabindex="0"
-                  class="group relative flex aspect-square cursor-default items-center justify-center overflow-hidden rounded-3xl bg-gradient-to-br from-[#bd988d]/25 to-[#e3a0a3]/25 p-6 text-center shadow-lg ring-1 ring-[#5c2c1f]/10 transition-shadow duration-300 hover:shadow-2xl focus:outline-none focus-visible:ring-2 focus-visible:ring-[#702a0c]"
+                  class="group relative flex aspect-square w-full max-w-[15rem] cursor-default items-center justify-center overflow-hidden rounded-full bg-gradient-to-br from-[#bd988d]/25 to-[#e3a0a3]/25 p-6 text-center shadow-lg ring-1 ring-[#5c2c1f]/10 transition-shadow duration-300 hover:shadow-2xl focus:outline-none focus-visible:ring-2 focus-visible:ring-[#702a0c]"
                 >
                   <span class="px-2 font-serif text-2xl text-[#702a0c] transition-all duration-300 group-hover:-translate-y-1 group-hover:opacity-0 group-focus:-translate-y-1 group-focus:opacity-0">
                     {passion.title}
                   </span>
-                  <div class="absolute inset-0 flex flex-col items-center justify-center gap-3 bg-[#5c2c1f] p-6 opacity-0 transition-opacity duration-300 group-hover:opacity-100 group-focus:opacity-100">
-                    <span class="font-serif text-xl text-[#e3a0a3]">
+                  <div class="absolute inset-0 flex flex-col items-center justify-center gap-2 rounded-full bg-[#5c2c1f] p-8 opacity-0 transition-opacity duration-300 group-hover:opacity-100 group-focus:opacity-100">
+                    <span class="font-serif text-lg text-[#e3a0a3]">
                       {passion.title}
                     </span>
-                    <p class="text-sm leading-snug text-[#f0e7d7]/90">
+                    <p class="text-xs leading-snug text-[#f0e7d7]/90">
                       {passion.description}
                     </p>
                   </div>
