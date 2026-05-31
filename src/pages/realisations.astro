@@ -7,13 +7,19 @@ import BaseLayout from '../layouts/BaseLayout.astro';
 const projects = await getCollection('projects');
 const sorted = projects.sort((a, b) => a.data.order - b.data.order);
 
-// Vignette du projet « Hygiène des mains » : on garde la photo de présentation,
-// puis on enchaîne avec l'affiche. Les autres projets et les pages de détail
-// ne changent pas.
+// Vignettes qui gardent la photo de présentation puis enchaînent avec les
+// premières images de la galerie (le chiffre = nombre d'images de galerie à
+// ajouter). Les autres projets et les pages de détail ne changent pas.
+const CARD_GALLERY_EXTRA: Record<string, number> = {
+  hygiene: 1,
+  'taxe-apprentissage': 2,
+};
+
 function cardCarousel(project: CollectionEntry<'projects'>) {
-  if (project.id === 'hygiene') {
-    const affiche = project.data.galleryImages?.[0];
-    if (affiche) return [project.data.cover, affiche];
+  const extra = CARD_GALLERY_EXTRA[project.id];
+  const gallery = project.data.galleryImages;
+  if (extra && gallery && gallery.length > 0) {
+    return [project.data.cover, ...gallery.slice(0, extra)];
   }
   return project.data.carouselImages;
 }
