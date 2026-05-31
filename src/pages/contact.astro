@@ -9,58 +9,79 @@ import { CONTACT_INFO } from '../lib/navigation';
   description="Contactez Sanjali Frédélisy par téléphone ou par email pour vos projets de communication."
 >
   <section
-    class="flex min-h-screen items-center justify-center bg-[#f0e7d7] px-4 py-24 md:px-6 md:py-32"
+    class="flex min-h-[calc(100vh-72px)] items-center justify-center px-6 py-20 md:py-28"
+    style="background-color: #2e1810;"
   >
-    <div class="mx-auto w-full max-w-4xl">
-      <header class="mb-12 text-center md:mb-16">
-        <h1 class="mb-6 text-4xl text-[#5c2c1f] md:mb-8 md:text-6xl">Contact</h1>
-      </header>
+    <div class="mx-auto w-full max-w-4xl text-center">
+      <p
+        class="mb-6 font-medium text-[#bd988d] text-xs uppercase tracking-[0.3em] md:text-sm"
+      >
+        Restons en contact
+      </p>
+
+      <h1
+        class="mb-6 font-serif text-4xl text-[#f0e7d7] leading-tight sm:text-5xl md:text-7xl"
+      >
+        Parlons de votre <em class="text-[#e3a0a3]">projet</em>.
+      </h1>
+
+      <p
+        class="mx-auto mb-14 max-w-2xl text-[#f0e7d7]/70 text-base leading-relaxed md:mb-16 md:text-xl"
+      >
+        Une opportunité d'alternance, une collaboration ou simplement une
+        question — je serai ravie d'échanger avec vous.
+      </p>
 
       <div class="mx-auto grid max-w-3xl gap-6 md:grid-cols-2 md:gap-8">
         <a
           href={CONTACT_INFO.phoneHref}
-          class="contact-card group flex flex-col items-center gap-4 rounded-3xl border border-[#bd988d]/20 bg-white/60 p-6 text-center shadow-lg backdrop-blur-sm transition-all hover:shadow-2xl md:p-8"
+          class="contact-card group flex flex-col items-center gap-5 rounded-3xl bg-[#f0e7d7] p-8 text-center shadow-xl md:p-10"
         >
-          <div
-            class="mb-2 flex h-16 w-16 items-center justify-center rounded-full bg-[#702a0c] transition-transform group-hover:scale-110 md:h-20 md:w-20"
+          <span
+            class="flex h-16 w-16 items-center justify-center rounded-full bg-[#702a0c] transition-transform group-hover:scale-110 md:h-20 md:w-20"
           >
             <Icon name="lucide:phone" class="h-6 w-6 text-[#f0e7d7] md:h-8 md:w-8" />
-          </div>
-          <div>
-            <p
-              class="mb-2 font-medium text-[#bd988d] text-sm uppercase tracking-wider"
-            >
-              Téléphone
-            </p>
-            <p class="font-semibold text-[#5c2c1f] text-lg md:text-2xl">
-              {CONTACT_INFO.phone}
-            </p>
-          </div>
+          </span>
+          <span
+            class="font-medium text-[#bd988d] text-xs uppercase tracking-[0.2em] md:text-sm"
+          >
+            Téléphone
+          </span>
+          <span class="font-semibold text-[#5c2c1f] text-xl md:text-2xl">
+            {CONTACT_INFO.phone}
+          </span>
         </a>
 
         <a
           href={CONTACT_INFO.emailHref}
-          class="contact-card group flex flex-col items-center gap-4 rounded-3xl border border-[#bd988d]/20 bg-white/60 p-6 text-center shadow-lg backdrop-blur-sm transition-all hover:shadow-2xl md:p-8"
+          class="contact-card group flex flex-col items-center gap-5 rounded-3xl bg-[#f0e7d7] p-8 text-center shadow-xl md:p-10"
         >
-          <div
-            class="mb-2 flex h-16 w-16 items-center justify-center rounded-full bg-[#702a0c] transition-transform group-hover:scale-110 md:h-20 md:w-20"
+          <span
+            class="flex h-16 w-16 items-center justify-center rounded-full bg-[#702a0c] transition-transform group-hover:scale-110 md:h-20 md:w-20"
           >
             <Icon name="lucide:mail" class="h-6 w-6 text-[#f0e7d7] md:h-8 md:w-8" />
-          </div>
-          <div>
-            <p
-              class="mb-2 font-medium text-[#bd988d] text-sm uppercase tracking-wider"
-            >
-              Email
-            </p>
-            <p
-              class="whitespace-nowrap font-semibold text-[#5c2c1f] text-sm sm:text-lg md:text-2xl"
-            >
-              {CONTACT_INFO.email}
-            </p>
-          </div>
+          </span>
+          <span
+            class="font-medium text-[#bd988d] text-xs uppercase tracking-[0.2em] md:text-sm"
+          >
+            Email
+          </span>
+          <span
+            class="break-words font-semibold text-[#5c2c1f] text-base sm:text-xl md:text-2xl"
+          >
+            {CONTACT_INFO.email}
+          </span>
         </a>
       </div>
+
+      <a
+        href="/cv-sanjali-fredelisy.pdf"
+        target="_blank"
+        rel="noopener noreferrer"
+        class="mt-14 inline-block font-medium text-[#bd988d] text-xs uppercase tracking-[0.25em] transition-colors hover:text-[#e3a0a3] md:mt-16 md:text-sm"
+      >
+        Télécharger mon CV
+      </a>
     </div>
   </section>
 </BaseLayout>
@@ -70,10 +91,11 @@ import { CONTACT_INFO } from '../lib/navigation';
     transition: transform 0.2s ease, box-shadow 0.3s ease;
   }
   .contact-card:hover {
-    transform: scale(1.05);
+    transform: translateY(-4px);
+    box-shadow: 0 25px 50px -12px rgb(0 0 0 / 0.45);
   }
   .contact-card:active {
-    transform: scale(0.95);
+    transform: scale(0.98);
   }
   @media (prefers-reduced-motion: reduce) {
     .contact-card,
