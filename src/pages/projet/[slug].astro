@@ -4,6 +4,7 @@ import FormattedText from '../../components/astro/FormattedText.astro';
 import Gallery from '../../components/astro/Gallery.astro';
 import Hero from '../../components/astro/Hero.astro';
 import ProjectSections from '../../components/astro/ProjectSections.astro';
+import SocialStats from '../../components/astro/SocialStats.astro';
 import ProjectLayout from '../../layouts/ProjectLayout.astro';
 
 export async function getStaticPaths() {
@@ -130,6 +131,8 @@ const fallbackTarget = !hasStructuredSections
       />
     )
   }
+
+  {data.socialStats && data.socialStats.length > 0 && <SocialStats stats={data.socialStats} />}
 
   {
     data.externalLinks && data.externalLinks.length > 0 && (

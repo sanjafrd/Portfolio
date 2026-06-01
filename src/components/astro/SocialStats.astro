@@ -1,0 +1,95 @@
+---
+interface Stat {
+  label: string;
+  value: number;
+  suffix?: string;
+}
+
+interface Props {
+  stats: Stat[];
+}
+
+const { stats } = Astro.props;
+---
+
+<section
+  class="social-stats mx-auto mt-24 grid max-w-4xl grid-cols-1 gap-8 sm:grid-cols-3"
+  aria-label="Statistiques d'abonnés sur les réseaux sociaux"
+>
+  {
+    stats.map((stat) => (
+      <div class="flex flex-col items-center gap-2 text-center">
+        <span
+          class="social-stat-value font-serif text-5xl text-[#702a0c] md:text-6xl"
+          data-target={stat.value}
+          data-suffix={stat.suffix ?? ''}
+        >
+          0{stat.suffix ?? ''}
+        </span>
+        <span class="font-medium text-[#8c5b45] text-sm uppercase tracking-widest">
+          {stat.label}
+        </span>
+      </div>
+    ))
+  }
+</section>
+
+<script>
+  function animateStat(el: HTMLElement) {
+    const target = Number(el.dataset.target ?? '0');
+    const suffix = el.dataset.suffix ?? '';
+    const duration = 2000;
+    const start = performance.now();
+
+    const step = (now: number) => {
+      const progress = Math.min((now - start) / duration, 1);
+      // Décélération douce vers la fin
+      const eased = 1 - (1 - progress) ** 3;
+      const current = Math.round(eased * target);
+      el.textContent = current.toLocaleString('fr-FR') + suffix;
+      if (progress < 1) {
+        requestAnimationFrame(step);
+      } else {
+        el.textContent = target.toLocaleString('fr-FR') + suffix;
+      }
+    };
+    requestAnimationFrame(step);
+  }
+
+  function setupSocialStats() {
+    const values = Array.from(
+      document.querySelectorAll<HTMLElement>('.social-stat-value'),
+    );
+    if (!values.length) return;
+
+    const reduceMotion = window.matchMedia(
+      '(prefers-reduced-motion: reduce)',
+    ).matches;
+
+    if (reduceMotion || !('IntersectionObserver' in window)) {
+      values.forEach((el) => {
+        const target = Number(el.dataset.target ?? '0');
+        el.textContent =
+          target.toLocaleString('fr-FR') + (el.dataset.suffix ?? '');
+      });
+      return;
+    }
+
+    const observer = new IntersectionObserver(
+      (entries) => {
+        entries.forEach((entry) => {
+          if (entry.isIntersecting) {
+            animateStat(entry.target as HTMLElement);
+            observer.unobserve(entry.target);
+          }
+        });
+      },
+      { threshold: 0.4 },
+    );
+
+    values.forEach((el) => observer.observe(el));
+  }
+
+  setupSocialStats();
+  document.addEventListener('astro:page-load', setupSocialStats);
+</script>

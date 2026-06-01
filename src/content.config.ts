@@ -88,6 +88,15 @@ const projects = defineCollection({
           }),
         )
         .optional(),
+      socialStats: z
+        .array(
+          z.object({
+            label: z.string(),
+            value: z.number(),
+            suffix: z.string().optional(),
+          }),
+        )
+        .optional(),
     }),
 });
 
